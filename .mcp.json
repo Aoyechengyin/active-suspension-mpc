@@ -3,6 +3,14 @@
     "git": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-git", "--repository", "E:/科研/claude"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"]
+    },
+    "latest-science": {
+      "command": "npx",
+      "args": ["-y", "@futurelab-studio/latest-science-mcp"]
     }
   }
 }
