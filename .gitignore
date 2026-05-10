@@ -1,0 +1,33 @@
+# MATLAB
+*.mex*
+*.slxc
+*.slx.autosave
+slprj/
+*.asv
+*.fig
+*.m~
+
+# Data files (large binary)
+*.mat
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Simulation outputs
+*.out
+*.log
+*.diary

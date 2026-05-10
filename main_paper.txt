@@ -1,0 +1,816 @@
+IEEE TRANSACTIONS ON INDUSTRIAL ELECTRONICS, VOL. 67, NO. 6, JUNE 2020         4877
+
+Regionless Explicit Model Predictive Control of
+   Active Suspension Systems With Preview
+
+ Johan Theunissen, Aldo Sorniotti , Member, IEEE, Patrick Gruber , Saber Fallah , Marco Ricco,
+                                           Michal Kvasnica, and Miguel Dhaens
+
+   Abstract--Latest advances in road profile sensors make                                                                TABLE I
+the implementation of preemptive suspension control a vi-                       REDUCTION (IN %) OF THE RMS VALUES OF THE HEAVE ACCELERATION,
+able option for production vehicles. From the control side,
+model predictive control (MPC) in combination with preview                                                   DUE TO MPC AND PREVIEW
+is a powerful solution for this application. However, the sig-
+nificant computational load associated with conventional                       Note: Only [23] includes a comparison based on experimental results.
+implicit model predictive controllers is one of the limiting
+factors to the widespread industrial adoption of MPC. As an                    feedforward-feedback scheme by Mercedes-Benz for ride
+alternative, this article proposes an explicit model predic-                   height adjustment through hydraulic active suspension
+tive controller (e-MPC) for an active suspension system with                   actuators ([5], [6]).
+preview. The MPC optimization is run offline, and the online
+controller is reduced to a function evaluation. To overcome                       A wide range of preview suspension controllers has
+the increased memory requirements, the controller uses the                     been proposed in the literature, including feedforward com-
+recently developed regionless e-MPC approach. The con-                         pensators [7], fuzzy logic controllers [8], gain scheduled
+troller is assessed through simulations and experiments on                     controllers [9], and neural network implementations [10].
+a sport utility vehicle demonstrator with controllable hy-                     Linear quadratic regulators (LQRs) and linear quadratic Gaus-
+draulic suspension actuators. For frequencies <4 Hz, the                       sian controllers are frequently adopted optimal control strategies
+experimental results with the regionless e-MPC without pre-                    for preview suspensions, because of their simple formulations
+view show a 10% reduction of the root-mean-square (RMS)                        and the common assumption of linear suspension dynamics
+value of the vertical acceleration of the sprung mass with                     ([11]­[17]). H and H2 /H controllers can deal with model
+respect to the same vehicle with a skyhook controller. In the                  uncertainties, external disturbances and parameter variations,
+same frequency range, the addition of preview improves the                     e.g., the sprung mass variation depending on the vehicle load
+heave and pitch acceleration performance by a further 8 to                     condition ([18]­[21]).
+21%.
+                                                                                  The idea of accounting for future disturbances from the road
+   Index Terms--Active suspension, preview, regionless                         ahead and for system or actuator constraints fits well with the
+explicit model predictive control, ride comfort.                               model predictive control (MPC) philosophy. Hence, several au-
+                                                                               thors, e.g., [22]­[31], proposed MPC implementations for pre-
+                           I. INTRODUCTION                                     view suspension systems. Table I indicates the ride comfort
+                                                                               benefits of various MPC suspension control implementations
+T HE performance benefits of active suspension systems                         from the literature without and with preview, with respect to
+      that account for the road profile ahead have been inves-                 the passive vehicle and the same vehicle with a more conven-
+tigated and demonstrated by several authors ([1]­[4]). Preview                 tional controller, such as an LQR or skyhook. To the best of our
+strategies for controllable suspensions are typically based on                 knowledge, the published work to date focused on conventional
+a feedforward disturbance compensation and a state feedback                    implicit model predictive control (i-MPC) implementations, in
+contribution. An industrial benchmark is the integrated                        which the optimization is run online. This, in turn, requires
+
+   Manuscript received November 19, 2018; revised February 21, 2019
+and May 1, 2019; accepted June 6, 2019. Date of publication July 12,
+2019; date of current version February 10, 2020. This work was sup-
+ported in part by Tenneco Automotive Europe and in part by the Slovak
+Research and Development Agency (Projects APVV 15-0007 and VEGA
+1/0585/19). (Corresponding author: Aldo Sorniotti.)
+
+   J. Theunissen is with Simmanco, 3060 Korbeek-Dijle, Belgium (e-mail:,
+johan.theunissen@simmanco.com).
+
+   A. Sorniotti, P. Gruber, S. Fallah, and M. Ricco are with the University
+of Surrey, Guildford GU2 7XH, U.K. (e-mail:, a.sorniotti@surrey.ac.uk;
+p.gruber@surrey.ac.uk; s.fallah@surrey.ac.uk; m.ricco@surrey.ac.uk).
+
+   M. Kvasnica is with the Slovak University of Technology, 811 07
+Bratislava, Slovakia (e-mail:, michal.kvasnica@stuba.sk).
+
+   M. Dhaens is with Tenneco Automotive Europe BVBA, 3800 Sint-
+Truiden, Belgium (e-mail:, mdhaens@Tenneco.com).
+
+   Color versions of one or more of the figures in this article are available
+online at http://ieeexplore.ieee.org.
+
+   Digital Object Identifier 10.1109/TIE.2019.2926056
+
+This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see http://creativecommons.org/licenses/by/4.0/
+4878  IEEE TRANSACTIONS ON INDUSTRIAL ELECTRONICS, VOL. 67, NO. 6, JUNE 2020
+
+significant computational power and makes industrial imple-         Fig. 1. QC model, including the hydraulic actuator, the road profile
+mentations relatively difficult. As a consequence, most of          model and preview capability.
+the studies are limited to simulation-based assessments. The
+very few papers with experimental results either use high-             Usually, the main nonlinearity of a suspension system is due
+performance processors [24] or very long sample times, i.e.,        to the characteristic of the passive damper, which is absent in the
+30 ms [23], to allow real-time implementation of the controllers.   specific plant. Moreover, the damping resulting from other pas-
+                                                                    sive suspension components (e.g., the bushings) is very small,
+   To facilitate the industrial adoption of MPC for active sus-     so that c1 can be considered negligible. Hence, the hypothesis
+pension control with preview, this article proposes an e-MPC        of using a linear model in (1) is deemed acceptable.
+approach ([32], [33]). With e-MPC the optimization problem
+is solved offline for an assigned range of operating conditions.       The hydraulic suspension actuator, installed in the strut as-
+The first output of the optimal control sequence is stored as an    sembly, is modeled as a first order transfer function
+"explicit" function of the states, and the online algorithm is re-
+duced to a simple function evaluation. Hence, e-MPC requires        ua (s)  =  s   1  1                              (2)
+a limited amount of online computational power compared to          u (s)         +
+i-MPC, while providing similar performance and ability to han-
+dle constraints. On the other hand, the challenges of e-MPC         where u is the actuator force demand, i.e., the system control
+are the increased design complexity and memory requirements.        input, and  is the time constant of the transfer function.
+The latter issue is significantly mitigated by the recently de-
+veloped theory of regionless e-MPC ([34], [35]). Region-based          The previous equations can be re-written into a continuous
+e-MPCs--but not regionless e-MPCs--have already been im-            time state-space formulation
+plemented in simulation ([36]­[39]) on semiactive and active
+suspensions without preview. In a few cases, they have also         x QC (t) = AQC xQC (t) + BQC u (t) + EQC w0 (t)
+been preliminarily experimentally validated ([40], [41]). How-
+ever, to the best of the knowledge of the authors, e-MPC has not    yQC (t) = CQC xQC (t) + DQC u (t)                (3)
+been proposed so far for preview suspension control.
+                                                                    where xQC and yQC are the state and output vectors; AQC ,
+   In summary, the contributions of this article are as follows.    BQC , CQC , and DQC are the system matrices; EQC is the
+    1) The e-MPC formulation for active suspension systems          road disturbance matrix; and t is time. yQC (t) contains the
+                                                                    acceleration of the sprung mass x¨1.
+       with preview.
+    2) The adoption of the regionless e-MPC approach for sus-          The e-MPC uses a state feedback law. Hence, its perfor-
+
+       pension control. This facilitates the implementation at      mance depends on the accuracy and appropriate selection of
+       shorter time steps with respect to i-MPC, and reduces the
+       memory requirements in comparison with the traditional       the measured or estimated states. In the specific implementa-
+       region-based e-MPC.                                          tion, xQC (t) = [x1 x 1 x1 - x2 x 1 - x 2 ua ]T , i.e., xQC
+   The proof-of-concept regionless e-MPC algorithm is assessed      contains the position and speed of the sprung mass, the suspen-
+through vehicle simulations and preliminary experimental tests
+on a vehicle demonstrator equipped with four commercially           sion displacement and deflection rate, and the actual actuator
+available active suspension actuators.
+                                                                    force.
+               II. INTERNAL MODEL FORMULATION                          In the controller implementation, the estimates of x1 and x 1
+
+   This article proposes a decentralized controller, i.e., based    are computed by high-pass filtering and integrating the vertical
+on an independent controller for each vehicle corner (see also
+Section III-D). As a consequence, a quarter car (QC) model (see     acceleration measurements of the vehicle body, through an al-
+Fig. 1) is used for the internal model of the MPC formulation
+                                                                    gorithm already implemented on production vehicles with the
+         m1 x¨1 + k1 (x1 - x2 ) + c1 (x 1 - x 2 ) + ua = 0          same active suspension system of this article. x1 - x2 is ob-
+                                                                    tained from the direct measurement of the active suspension
+         m2 x¨2 + k1 (x2 - x1 ) + k2 (x2 - w0 )
+                                                                    actuator displacement and consideration of the suspension in-
+                + c1 (x 2 - x 1 ) + c2 (x 2 - w 0 ) - ua = 0 (1)
+                                                                    stallation ratio, i.e., the ratio between the actuator displace-
+where ua is the actual force generated by the actuator; m1
+and m2 are the sprung and unsprung masses; k1 and c1 are the        ment and the relative vertical displacement between the sprung
+vertical suspension stiffness and residual damping of the passive   and unsprung masses [42]. x 1 - x 2 is calculated through
+components; k2 and c2 are tire stiffness and damping; x1 and x2
+are the sprung and unsprung mass displacements; and w0 is the
+vertical displacement of the tire contact patch. For simplicity,
+the implementation of this article assumes c2  0.
+THEUNISSEN et al.: REGIONLESS EXPLICIT MPC OF ACTIVE SUSPENSION SYSTEMS WITH PREVIEW                                                                  4879
+
+differentiation of x1 - x2 with the hybrid smooth derivative                                             III. CONTROLLER FORMULATION
+method [43]. ua is estimated from the measurements of the
+compression and rebound chamber pressures.                                A. System Prediction
+
+  For preview control, the vertical road profile is modeled                   Given the initial state, x(k), and the system in (7), the
+
+through a shift register, which is represented in discrete time           predicted output, y^, is calculated as
+
+form as                                                                            Cs,d As,d             
+
+  w0 (k + 1)               0    1 0 0 ...          0        w0 (k)               Cs        As         2  
+                                0 1 0 ...                                                  ...
+                                0 0 1 ...                                            ,  d       ,  d
+                                ... ... ... . . .
+   w1 (k + 1)              0    0 0 0 ...          0         w1 (k)       y^  =                            x (k)
+   w2 (k + 1)              0                       0         w2 (k)
+                           ...                     ...                             Cs ,d As ,d p p ×1
+          ...              0                       1             ...
+  wN -1 (k + 1)    =                                        wN -1 (k)                                                ...  0           
+                                                                                     Cs,d BQ C ,d                                 0
+                                                                                 +  ...                                           ... 
+                                                                                                                     ...  ...                         u^
+
+  wN (k + 1)               0 0 0 0 ... 0                    wN (k)                 Cs ,d As ,d p -1 BQ C ,d . . . Cs ,d BQ C ,d DQ C ,d p ×(c + 1)
+                                                                     (4)
+                                                                                                                                                      (8)
+
+                            0                                             with
+
+                                0                                                                           y (k + 1)      u (k) 
+                                0
+                         +      ...     yr  (k)                                                    y^ =  ...  , u^ =  ...                             (9)
+                                0
+                                                                                                           y (k + p)             u (k + c)
+
+                                1                                         where p and c are the number of steps corresponding to the
+                                                                          prediction and control horizons, and u^ is the control input over
+where k indicates the current time step. With simplified nota-            c, i.e., the vector of optimization variables. (8) can be shortened
+tions (4) can be rewritten as                                             to
+
+         w^ (k + 1) = 0 Ar,d w^ (k) + Er,d yr (k)                   (5)                                       y^ = x (k) + u u^.                      (10)
+
+where w^ = [ w0 · · · wN ]T is the vector of the road system                  The state predictions, x^, are computed with a similar method
+states, i.e., the road profile heights ahead of the tire, which
+                                                                                                              x^ = x (k) + u u^                       (11)
+consists of N points (see Fig. 1) equally spaced according to
+the time step t of the internal model; Ar,d is the shift model            with
+matrix; yr (k) = wN (k + 1) is the disturbance input provided
+by the preview sensor measurement; and Er,d is the road system                                                        x (k + 1) 
+disturbance matrix.
+                                                                                                              x^ =  ...                               (12)
+   By augmenting the state vector to x(t) = [x1 x 1 x1 - x2
+x 1 - x 2 ua w^]T , applying zero-order-hold discretization of                                                        x (k + p)
+the QC model (3) to obtain the system matrices AQC,d , BQC,d ,
+CQC,d , DQC,d , and EQC,d , and integrating the QC model with             where , u , , and u are the resulting matrices.
+the road model (5), the complete vehicle-actuator-road system,
+                                                                          B. Constrained Optimization and mp-QP
+indicated by the subscripts s in the remainder, reads                     Problem Formulation
+
+x (k + 1) =      AQC,d EQC,d 0                    x (k) + BQC,d u (k)        A generic model predictive controller finds the optimal se-
+                                                                          quence of control inputs, u^, that minimizes a cost function,
+                   0                 0      Ar,d                          JMPC, which depends on y^, x^, and u^
+
+                      0                                                              min           JMPC    =  min    y^T Q1 y^ + x^T Q2 x^ + u^T Ru^
+
+             +                  yr (k)                                                  u^                       u^
+
+                   Er,d                                                              s.t. (x (k + i) , u (k + i))  F, i = 0, . . . , p (13)
+
+  y (k) = CQC,d 0 x (k) + DQC,d u (k)                               (6)   where Q1, Q2, and R are weight matrices, F is a full-
+                                                                          dimensional polyhedral set of appropriate dimensions, i is an
+which can be simplified into                                              integer, and p is the number of prediction steps, which defines
+                                                                          the prediction horizon.
+         x (k + 1) = As,d x (k) + BQC,d u (k)
+                                                                             By substituting the formulations of the output and state pre-
+                                + Es,d yr (k)                             dictions (respectively (10) and (11)) into (13), eliminating the
+                                                                          terms not depending on u^, and dividing by 2, the optimization
+                 y (k) = Cs,d x (k) + DQC,d u (k) .                 (7)
+4880                                                       IEEE TRANSACTIONS ON INDUSTRIAL ELECTRONICS, VOL. 67, NO. 6, JUNE 2020
+
+problem becomes                                                     5 + (N + 1) mp-QP parameters. In contrast, a centralized sus-
+                                                                    pension controller would have to be based on a seven-degree-
+      min    1  u^T   u T Q1 u + u T Q2 u + R u^                    of-freedom (7-DOF) model to consider the vertical dynamics
+             2                                                      of the unsprung masses, the heave, pitch, and roll dynamics of
+        u^                                                          the sprung mass, the actuator dynamics, and the road model for
+                                                                    each corner. This would result in a considerably larger problem,
+             + x(k)T T Q1 u + T Q2 u u^                             with 18 + 4(N + 1) mp-QP parameters.
+
+      s.t. P u^  M1 + M2 x (k) .                      (14)          E. Regionless e-MPC
+
+   The typical quadratic programming (QP) format is obtained        In the e-MPC implementation, the solution of the mp-QP
+through the simplification of (14)
+                                                                    problem in (15) is computed offline. The solution is the func-
+                min   1  u^T  H  u^  +  x(k)T  F  u^                tion u^(x), which is piecewise affine and maps the parame-
+                      2
+                  u^                                                ter vector onto the sequence of optimal control inputs. The
+
+             s.t. P u^  M1 + M2 x (k)                 (15)          e-MPC uses only the control input at the first time step, i.e.,
+                                                                    u(x) = [ I 0 · · · 0 ]u^(x), and the online implementation re-
+
+where H, F , P , M1, and M2 are constant matrices. The initial      duces to a simple function evaluation.
+states of the system are included in x(k), the parameter vector.
+                                                                    In the region-based e-MPC [33], the explicit representation
+   A conventional i-MPC would execute an online optimiza-
+tion at each time step for a given value of x(k), which is re-      of the control action is a piecewise affine state feedback law,
+placed by x in the remainder for the sake of brevity, and the
+control law would be implicitly obtained by the QP solver. In       defined by a partitioning of the state-space into m polyhedral
+the e-MPC case, the optimization is performed offline, i.e., the
+QP problem is solved for the whole range of x, which explic-        critical regions
+itly generates u = u(x). The optimization problem becomes a
+multiparametric QP (mp-QP) problem, generally described as                               L1 x + l1 ,        S1 x  s1
+the minimization of the objective function with the constraints                       
+defined in (15).                                                                         ...                ...
+                                                                          u (x) =                                     (17)
+
+                                                                                        Lm x + lm , Sm x  sm
+
+C. Objective Function                                               where Li, li, Si, and si are constant matrices that are stored in
+                                                                    the control hardware. The benefit of this method is the reduction
+   The key objective for ride comfort enhancement is the min-       of the online computational requirements with respect to the
+imization of the vertical acceleration of the sprung mass. Ad-      more common i-MPC. On the downside, the method yields
+ditionally, the optimal solution has to consider the limitation     increased memory requirements, especially for systems with a
+of actuator displacement, chassis motion and wheel hop [44].        large number of parameters, and significant offline calculations.
+Hence, this article uses a cost function penalizing x¨1, x1 - x2 ,  The first point is a major issue of the region-based method
+x1, and x2 - w0 . The control effort u is also included to limit    applied to preview suspension control, in particular, if multiple
+the actuation power consumption. The discrete form of the per-      preview points (i.e., e-MPC parameters) are included in the
+formance index to be minimized JMPC is                              model in (4).
+
+        p                                                              To mitigate the weaknesses of the region-based e-MPC, this
+                                                                    article adopts the recently proposed regionless e-MPC approach,
+JMPC =       1 x¨1 (k + i)2 + 2 (x1 (k + i) - x2 (k+ i))2           described in [34] and [35]. The method does not need to compute
+                                                                    or store the critical regions, defined by Si and si. In fact, in
+        i=1                                                         the offline process all the possible active sets {A1 , . . . , ANR }
+                                                                    that can be locally optimal are considered through the extensive
+                + 3 x1 (k + i)2 + 4 (x2 (k + i)                     enumeration method in [45], where NR is the number of regions.
+                                                                    A linear program based on the Karush­Kuhn­Tucker conditions
+                                        c                           is solved to determine the feasibility of the candidate active sets.
+                                                                    For each locally optimal active set the solution is
+                -w0 (k + i))2 + 5 u(k + i)2           (16)
+
+                                        i=0
+
+where the factors i are the objective function weights, which                         u^ = -H-1 F T x + PATi          (18)
+define Q1 , Q2 , and R in (13). In the specific implementation,
+the constraints are related to the actuator force and suspension    where PAi includes only the rows of P indexed by the set of
+                                                                    active constraints, and  represents the dual variables given by
+displacement.
+
+                                                                                       = Q (Ai) x + q (Ai)            (19)
+
+D. Decentralized Controller                                         with
+
+   To reduce the e-MPC generation time, memory requirements         Q (Ai ) = - PAi H -1 PATi -1 M2Ai + PAi H -1 F T  (20)
+and implementation complexity, a decentralized control archi-       q (Ai ) = - PAi H -1 PATi -1 M1Ai                 (21)
+tecture is adopted, with one independent e-MPC at each vehi-
+cle corner. In fact, each QC-actuator-road model inherits only
+THEUNISSEN et al.: REGIONLESS EXPLICIT MPC OF ACTIVE SUSPENSION SYSTEMS WITH PREVIEW  4881
+
+Fig. 2. ACOCAR vehicle demonstrator with preview sensor.                 1) three vertical acceleration sensors installed on the sprung
+                                                                            mass, two of them located in proximity of the front
+where M1Ai and M2Ai contain only the rows of M1 and M2                      bumper, and one in proximity of the rear bumper;
+corresponding to the active set Ai. The maps of Q(Ai) and
+q(Ai) are generated offline and stored in the controller together        2) a three-degree-of-freedom (3-DOF) inertial measurement
+with H-1 , F , P , M1 , and M2 .                                            unit;
+
+   In the online implementation of the regionless controller,            3) suspension displacement sensors;
+(18)­(19) are used to calculate u^, by finding the optimal active        4) a preview sensor, i.e., the solid state LiDAR XenoTrack,
+
+set for the current x from the list of locally optimal active sets.         mounted on the roof of the car.
+                                                                        A three-dimensional (3-D) model of the road ahead is con-
+In particular, the optimal active set must fulfil the conditions     structed (i.e., a rolling carpet), and only the road profile heights
+                                                                     directly in front of the wheels are sent to the e-MPCs. The ac-
+  0                                                                  curacy and robustness of the preview road profile signal was
+                                                                     guaranteed via appropriate high-pass filtering of the sensor
+P u^ < M1 + M2 x.                                         (22)       outputs, a compensation algorithm of the sprung mass mo-
+                                                                     tion, and experimental tests to obtain the synchronization lag
+   The details of the online algorithm are reported in [45]. The     values.
+resulting control action is identical to the one generated by           All controllers and state estimators were installed on the
+the region-based e-MPC, i.e., the regionless and region-based        dSPACE MicroAutoBox II system of the vehicle, which has
+implementations bring exactly the same results.                      a 16 MB flash memory. The regionless e-MPCs were integrated
+                                                                     into the ACOCAR suspension control software framework to
+            IV. CONTROL SYSTEM IMPLEMENTATION                        interface with the hardware. A low-level actuator management
+                                                                     system calculates the reference currents for the compression and
+A. Vehicle Demonstrator                                              rebound valves, as well as the pump reference speed, as func-
+                                                                     tions of u and x 1 - x 2. The current driver modules of the pro-
+   The decentralized controller was implemented on a sport util-     duction suspension system feed the actuator valves and pumps.
+ity vehicle (SUV) demonstrator (see Fig. 2) with a hydraulic
+active suspension system--the Tenneco Monroe intelligent sus-        B. Model Validation
+pension, ACOCAR. At each vehicle corner, a pump pressurizes
+the hydraulic circuit of the actuator and thereby inputs energy         Measurements of the ACOCAR vehicle demonstrator re-
+into the system. The pressure level in the hydraulic chamber is      sponse on a four-poster test rig were used for the validation
+modulated through the currents of the base and piston valves of      of two simulation models: a) a 7-DOF model for control system
+the actuator, which is installed in parallel to an air spring. This  assessment, implemented in MATLAB/Simulink. This model
+actuation system mainly targets roll, pitch and primary ride         considers heave, roll and pitch of the sprung mass, and vertical
+control (see [46], [47] for the definition of primary ride), i.e.,   displacement of each unsprung mass, and includes a simplified
+it is designed for input frequencies <4 Hz, but usually causes       model of the actuation system dynamics; and b) the internal
+degradation of the secondary ride comfort performance, i.e.,         e-MPC model, i.e., the QC model described in Section II.
+for frequencies >4 Hz. The vehicle demonstrator has a double
+wishbone suspension on the front axle, and a multilink suspen-          The four-poster test rig was set up to emulate a typical ISO C­
+sion system on the rear axle, with installation ratios of 0.7 and    D ride comfort assessment road [48]. During the experiments, a
+0.76.                                                                fixed current of 0.4 A was applied to the piston and base valves
+                                                                     of the actuators to maximize the size of the valve orifices, and,
+   The relevant sensor set consists of the following:                thus, achieve minimum damping.
+
+                                                                        The reported experimental values were calculated from the
+                                                                     vertical acceleration and actuator displacement measurements,
+                                                                     by using the state estimator of the ACOCAR suspension sys-
+                                                                     tem. The time domain results were converted into the frequency
+                                                                     domain, and are shown in Fig. 3 in terms of power spectral den-
+                                                                     sities (PSDs). A good match between the 7-DOF model and the
+                                                                     real vehicle is observed up to 15 Hz, which is in line with the
+                                                                     model bandwidth. In particular, the 7-DOF model captures the
+                                                                     resonance peak of the sprung mass at 1­1.5 Hz, and those of
+                                                                     the unsprung masses at 10­12 Hz.
+
+                                                                        The e-MPC internal model in (1) was validated in a similar
+                                                                     way, i.e., the front and the rear QC model outputs were com-
+                                                                     pared with the experimental displacements of the suspension
+                                                                     top mounts and wheels. A good level of modeling accuracy was
+                                                                     achieved also in this case, as shown in Fig. 4.
+4882  IEEE TRANSACTIONS ON INDUSTRIAL ELECTRONICS, VOL. 67, NO. 6, JUNE 2020
+
+                                                                          Fig. 4. Example of experimental validation of the 7-DOF and QC mod-
+                                                                          els along the ride comfort road profile emulated on the four-poster test
+                                                                          rig: time histories of suspension deflections. The subscripts FL, FR, RL,
+                                                                          and RR indicate the front left, front right, rear left, and rear right corners.
+
+Fig. 3. Example of experimental validation of the 7-DOF model along
+the ride comfort road profile emulated on the four-poster test rig: PSDs
+of sprung mass accelerations and positions.
+
+   The e-MPC internal actuator model in (2) was validated                 Fig. 5. Example of experimental validation of the e-MPC internal
+with actuator test rig data. For example, Fig. 5 shows the time           actuator model for step-in and step-out force demand tests.
+histories of the force demand, measured force and simulated
+force for step-in and step-out force demand tests. A good match           (16) prioritized the reduction of the vertical acceleration and
+was achieved with  = 50 ms, despite the simplicity of the                 displacement of the sprung mass, by choosing greater values
+model formulation.                                                        for 1 and 3 relative to 2 and 5 . 4 was only used for a
+                                                                          preliminary feasibility check in simulation, targeting the wheel
+C. Explicit Controller Generation and Implementation                      hop reduction, while it was set to 0 in the experiments as wheel
+                                                                          hop was not observed.
+   According to the internal model formulation in (7), dis-
+cretized at t = 10 ms, each controller is based on 8 mp-QP                   The mp-QP problems for the active suspension system with
+parameters, i.e., the four states of the QC model, one state for          and without preview were solved with a custom version of
+the actuator, and three states (N = 2) for the road profile ahead         the multiparametric toolbox 3 [49] that included the region-
+according to (4).                                                         less solver RLENUMPQP. The solution was considered over
+                                                                          a bounded partition of the state-space, with the following lim-
+   Simulations on a ride comfort road and a speed bump were               its: ±0.1 m in body displacement; ±0.5 m/s in body velocity;
+carried out to evaluate the independent and combined effects of           ±0.15 m in suspension displacement; ±4 m/s in suspension
+p, i.e., the prediction horizon, c, i.e., the control horizon, and        velocity; and ±0.15 m in road displacement.
+N , i.e., the number of preview points. It was verified that in the
+specific test scenarios the increase of p and c brings significant           Table II gives the comparison of the region-based and re-
+benefits. Therefore, p and c were assigned relatively large values,       gionless algorithms, in terms of solution generation time and
+respectively, 8 and 6. On the contrary, N was tuned to be as low          corresponding memory requirements, where the reduction of
+as possible, to reduce the required flash memory size (which              the latter is of the essence for the industrial implementation of
+strongly varies with N ) without significantly affecting comfort.         the algorithm. In particular, the industrial partners of this article
+At 50 km/h, the selected parametrization corresponds to a 0.3             specified an upper limit of 1 MB memory to ensure applicabil-
+m look ahead distance and a >1 m prediction distance.                     ity to a production-ready suspension system. As indicated by
+
+   An inequality constraint was applied to the actuator force
+magnitude, i.e., <9000 N. The tuning of the cost function
+THEUNISSEN et al.: REGIONLESS EXPLICIT MPC OF ACTIVE SUSPENSION SYSTEMS WITH PREVIEW  4883
+
+                                         TABLE II
+   EXPLICIT SOLUTION GENERATION TIME AND MEMORY DEMAND OF THE
+
+            REGION-BASED AND REGIONLESS E-MPC APPROACHES
+
+                                                                            Fig. 7. Critical regions on the w1 (w0 ) plane, for the e-MPC with preview
+                                                                            tested on the vehicle demonstrator.
+
+Fig. 6. Critical regions on the x 1 (x1 ) plane for the e-MPC with preview
+tested on the vehicle demonstrator.
+
+Table II, the regionless e-MPC achieves this specification for              Fig. 8. Distribution of the randomly selected parameters of the Monte
+both configurations, with and without preview, which is an im-              Carlo analysis.
+portant outcome of this article. To meet the 1 MB memory spec-
+ification at the vehicle level for the system with preview, and             D. e-MPC Stability
+verify the system robustness with respect to the modeling uncer-
+tainty, the same regionless explicit solution was implemented                  From a theoretical viewpoint, the closed-loop stability of
+on the front and rear suspensions, despite a marginal difference            the proposed e-MPC can be achieved by including the term
+in their parameters. In contrast, the traditional region-based e-           xT (k + p)Zx(k + p) into the objective function (16) via (15),
+MPC solution obtained with the ENUMPQP solver meets the                     where Z is the solution of the algebraic Riccati equation for the
+memory specification only for the nonpreview version, and sig-              system in (7), along with the constraint x(k + p)  , where 
+nificantly exceeds the limit when preview is included. Moreover,            is a positive invariant set for the system. However, stability can
+the online algorithm of the regionless e-MPC required, on aver-             also be achieved by appropriately choosing the state and input
+age, only 0.09 ms run time (with a maximum of 0.2 ms) on the                weighting coefficients i in (16). Typically, selecting the state
+dSpace platform during a typical test. The short computation                weights significantly larger than the input weight 5 helps to
+times therefore allow the implementation of the controller at               achieve a stable behavior of the closed-loop system, which is
+almost any time-step used in automotive applications.                       the tuning method used here.
+
+   With the regionless approach, the regions do not need to                    In this article, the stability of the controller was verified
+be calculated, but they can be reconstructred and visualized a              through Monte Carlo simulations. The e-MPC strategy was
+posteriori. For the specific preview controller, the solution is            tested in 1000 challenging scenarios, each set up with a different
+a set of affine functions over 1099 polyhedral regions. Figs. 6             vehicle mass, speed and actuator response time. The simulations
+and 7 show two-dimensional (2-D) slices over the multidimen-                were performed over a 1-m long speed bump with a height that
+sional state-space. Such representation of the explicit control             was also changed between runs. Fig. 8 shows the distribution
+law allows the formal analysis of the stability and robustness              of the randomly selected values of the four parameters. The
+properties of the resulting controller. The figures also report the
+operating points of the system along a speed bump at 50 km/h.
+The analysis of the actual operating points of the vehicle in real
+maneuvers is useful to understand whether specific portions of
+the e-MPC control law can be adopted to formulate a simplified
+rule-based controller.
+4884                                                        IEEE TRANSACTIONS ON INDUSTRIAL ELECTRONICS, VOL. 67, NO. 6, JUNE 2020
+
+controller was considered stable if the suspension deflections at
+each corner of the 7-DOF model did not exceed 5 mm, 3 s after
+the front axle hit the bump. Stability was achieved in all cases.
+
+E. Benchmark Controller: Centralized Skyhook
+
+A centralized skyhook algorithm [51], already implemented
+
+and tested on the case study vehicle demonstrator, was used as
+
+the experimental benchmark for the decentralized e-MPCs. In
+
+the skyhook approach, the total sprung mass reference heave
+
+force Fh , antipitch moment Mp , and antiroll moment Mr , are
+
+calculated as
+
+                                     0   0       x s,est  
+                 Fh          ch      cp  0        est
+                 Mp    =     0                              (23)
+
+                 Mr          0 0 cr               est
+
+where ch , cp , and cr are the skyhook damping coefficients for             Fig. 9. Time domain plots of heave, pitch and roll accelerations ob-
+the heave, pitch and roll motions; and x s,est , est , and  est are         tained on a simulated section of the ride comfort road at 60 km/h.
+the estimated heave, pitch and roll rates of the sprung mass. The
+matrix form of (23) is Fsh = csh Vest , where Fsh is the vector             Fig. 10. Simulation of a ride comfort road at 60 km/h: PSDs of the
+of the total skyhook force and moments, csh is the matrix of                heave and pitch accelerations.
+the skyhook coefficients, and Vest is the vector including the
+three speeds in (23). In addition, Fsh = Luc,sh , where uc,sh is                                                     TABLE III
+the vector of the skyhook actuation forces at the four corners,             RMS VALUES OF THE SPRUNG MASS ACCELERATIONS FOR THE SIMULATED
+
+i.e., the outputs of the controller, and L is the matrix with the                                     RIDE COMFORT ROAD AT 60 KM/H
+coefficients to calculate the resulting force and moments acting
+
+on the sprung mass. The terms of L include the geometric vehicle
+parameters, e.g., the front and rear semi-wheelbases hF and hR ;
+and track widths tF and tR . In the controller implementation, a
+pseudoinverse formulation is used to obtain the control action
+
+vector uc,sh
+
+uc,sh = [uF L uF R uRL uRR ]T = LT L -1 LT csh Vest
+                                                                      (24)
+
+with
+
+                       -1 -1 -1 -1                     
+
+               L =  hF hF -hR -hR                           (25)
+
+                       tF    -   tF      tR    -  tR
+                        2         2       2        2
+
+where the notations F L, F R, RL, and RR indicate the front
+left, front right, rear left, and rear right corners.
+
+                              V. RESULTS                                          Note: The % variations are with respect to the system in the column to the
+                                                                                  immediate left.
+A. Simulation Results
+                                                                            the medium-to-long-term potential of the e-MPC preview
+   The 7-DOF vehicle model was used for the virtual valida-                 technology.
+tion of the controllers along a ride comfort track, at a constant
+speed of 60 km/h. The analysis involved the regionless e-MPC                   Fig. 9 reports the time histories of the heave, pitch, and roll
+implementations, including and excluding preview, and their                 accelerations for a section of the run. In particular, the passive
+performance comparison with the passive vehicle, i.e., the case             set-up has a 3.96 m/s2 peak heave acceleration, which is re-
+study SUV without active suspensions. The simulations with                  duced to 1.91 and 1.26 m/s2 for the e-MPCs without and with
+the controllers were based on realistic data of next-generation             preview. Fig. 10 shows the results in terms of PSD profiles of
+suspension actuators with higher bandwidth than those installed             the heave and pitch accelerations, while Table III reports the
+on the real vehicle demonstrator, and under the hypothesis of
+perfect synchronization of the preview input with the actual
+road profile at the wheels. This set-up was chosen to assess
+THEUNISSEN et al.: REGIONLESS EXPLICIT MPC OF ACTIVE SUSPENSION SYSTEMS WITH PREVIEW  4885
+
+root-mean-square (RMS) values of the vehicle body accelera-
+tions ai,RMS for heave, pitch and roll, calculated as
+
+          f2                0.5
+
+ai,RMS =      PSDi (f ) df       (26)
+
+          f1
+
+where f is the frequency, and f1 and f2 are the boundaries of       Fig. 11. Experimental results for test 2: Time domain plots of the heave
+the considered frequency range. In the PSD plots, the benefits      position and pitch angle.
+of the controllers are evident for the 0­15 Hz range. This con-
+firms the appropriateness of the e-MPC designs for improving        Fig. 12. Experimental results for test 1: PSDs of the heave and pitch
+both primary ride and secondary ride. In particular, the e-MPC      accelerations.
+without preview reduces the ai,RMS values by more than 45%
+with respect to the passive vehicle, while the introduction of
+preview brings a further improvement, ranging from 19 to 35%
+depending on the considered acceleration.
+
+   The table also includes the RMS values of the heave, pitch
+and roll accelerations of the vehicle sprung mass, after the ap-
+plication of frequency weighting functions according to [52].
+In particular, the heave acceleration is weighted more in the
+4­8 Hz frequency band than in the other frequency ranges. The
+overall improvements brought by the e-MPCs are similar to
+those without frequency weighting and consistent with the re-
+sults in Table I, which confirms the all-around effectiveness of
+the proposed controllers.
+
+   As the actuation dynamics represent an unmatched uncer-
+tainty in the system, ride comfort road simulations at 60 km/h
+were run to assess robustness with respect to the actuator time
+constant  , which was varied up to 300 ms (six times the value
+for the available hydraulic actuators), while keeping the e-MPC
+tuned for the nominal  . The results show that the controllers
+without and with preview perform significantly better than the
+passive set-up, and the active setup with preview always pro-
+vides the best performance.
+
+B. Experimental Results                                             Fig. 13. Experimental results for test 2: PSDs of the heave and pitch
+                                                                    accelerations.
+   The performance of the e-MPCs (excluding and including
+preview) was experimentally tested with the ACOCAR vehicle          set-ups have heave displacements of ­0.018 and ­0.014 m at the
+demonstrator (see Section IV-A) and compared to the car with        first negative oscillation peak. For the e-MPCs without and with
+the active skyhook controller (Section IV-E) and a passive sus-     preview, these values are reduced to ­0.011 and ­0.010 m.
+pension set-up. The passive set-up was obtained by applying
+fixed currents to the actuator valves to achieve a suspension          Figs. 12 and 13 show the PSD results in the frequency do-
+tuning that is close to the one of the passive version of the SUV.  main. Tables IV and V report the RMS values of the heave
+                                                                    and pitch accelerations of the vehicle sprung mass without and
+   The experiments consisted of two tests carried out on the        with frequency weighting, up to 15 Hz, i.e., well beyond the
+public roads of Sint Truiden (Belgium).
+
+    1) Test 1: Driving over a short wavelength speed bump with
+       a height of 5 cm and a length of 0.4 m, at approximately
+       30 km/h.
+
+    2) Test 2: Driving over a long wavelength speed bump with
+       a height of 15 cm and a length of 2.5 m, at approximately
+       50 km/h, which causes significantly higher accelerations
+       than test 1.
+
+   The tests were repeated several times to verify the reliability
+of the measurements. Fig. 11 shows the time history of the heave
+position and pitch angle of the vehicle body for test 2. The
+results confirm the reduction of the sprung mass motion when
+negotiating the bump. For instance, the passive and skyhook
+4886  IEEE TRANSACTIONS ON INDUSTRIAL ELECTRONICS, VOL. 67, NO. 6, JUNE 2020
+
+                                         TABLE IV                                           controller are 14% and 6% higher than with the e-MPC with-
+   RMS VALUES OF THE SPRUNG MASS ACCELERATIONS DURING TEST 1                                out preview. This result is particularly remarkable considering
+                                                                                            that the skyhook controller includes a term directly targeting
+Note: The % variations are with respect to the system in the column to the immediate left.  the pitch dynamics. Also, the level of technology maturity of
+                                         TABLE V                                            its implementation on the vehicle demonstrator is significantly
+                                                                                            higher than that of the proposed e-MPCs.
+   RMS VALUES OF THE SPRUNG MASS ACCELERATIONS DURING TEST 2
+                                                                                               In general, the RMS values of the heave and pitch fre-
+Note: The % variations are with respect to the system in the column to the immediate left.  quency weighted accelerations of the vehicle sprung mass in the
+                                                                                            0­15 Hz frequency range tend to generate more limited con-
+bandwidth of the specific actuators. The roll acceleration results                          troller benefits in comparison with the non-weighted results.
+are omitted, as roll motion was not excited by these tests.                                 This is mainly due to the actuator bandwidth, and the fact that
+                                                                                            the frequency weighting functions were not accounted for in the
+   As expected, given the relatively low bandwidth of the spe-                              cost function (16) nor in the tuning of the e-MPC parameters,
+cific actuators, the controlled set-ups mainly improve primary                              which is the subject of future work. Nevertheless, the e-MPCs
+ride, i.e., the range of 0­4 Hz. For example, in this frequency                             still show considerable benefits over the skyhook.
+range, the e-MPC without preview improves the RMS heave
+acceleration performance without frequency weighting in both                                   As a summary of the performance benefit, Tables IV and V
+tests by 11% compared to the skyhook. The addition of preview                               also include the vibration total value av i.e., an indicator that
+reduces the RMS accelerations by a further 10% and 12% in                                   combines vibrations in multiple directions [52]
+tests 1 and 2. The e-MPC without preview reduces the pitch
+accelerations by 17% and 7% in the two tests compared to the                                av = kh2 a2h,RMS + kp2 ap2,RMS 0.5  (27)
+skyhook, while the preview adds a further benefit, i.e., 21% in
+test 1 and 8% in test 2.                                                                    where ah,RMS and ap,RMS are the RMS heave and pitch accel-
+                                                                                            erations. kh and kp are the multiplying factors, both set to 0.4.
+   The results are confirmed over the 0­15 Hz frequency band.                               In test 1, the skyhook reduces the av indicator based on the fre-
+For instance, the RMS values of the heave acceleration in the                               quency weighted accelerations by only 3% with respect to the
+two tests are 0.95 and 1.61 m/s2 for the passive set-up, while the                          passive vehicle, while the e-MPCs without and with preview
+e-MPC with preview reduces the values to 0.80 and 0.74 m/s2. In                             outperform the production skyhook controller by 12% and a
+the same frequency range, the heave acceleration performance                                further 7%. In test 2, despite the already excellent performance
+of the e-MPC with preview is consistently better than that of                               of the skyhook, which provides a 37% improvement over the
+the e-MPC without preview; 4% improvement during test 1 and                                 passive case, the e-MPCs without and with preview further re-
+12% improvement during test 2. Similarly, the preview reduces                               duce the vibration total value by 4% and 8%. Such preliminary
+the RMS of the pitch motion by 16% and 4%. Moreover, the                                    experimental benefits are aligned with the literature in Table I,
+e-MPC without preview consistently outperforms the skyhook                                  which is mainly based on simulation results, and encourage the
+algorithm, e.g., by 9% in terms of heave acceleration. An impor-                            further industrial development of regionless e-MPC for active
+tant conclusions is that despite the decentralized architecture of                          suspension control.
+the implemented e-MPCs, the associated vehicle performance
+improvement is evident also in terms of pitch acceleration. In                                                         VI. CONCLUSION
+fact, the RMS values of pitch acceleration with the skyhook
+                                                                                               To the best of our knowledge, for the first time this article
+                                                                                            implemented a regionless e-MPC strategy for an active suspen-
+                                                                                            sion system with and without preview. The activity allows the
+                                                                                            following conclusions.
+
+                                                                                                1) The internal QC models of the decentralized e-MPC ar-
+                                                                                                   chitecture provide a sufficiently good match with the
+                                                                                                   experimental data, and can be considered simple yet
+                                                                                                   appropriate formulations for suspension control design.
+
+                                                                                                2) The regionless e-MPC with preview based on a QC
+                                                                                                   model brings a memory requirement reduction by a fac-
+                                                                                                   tor of 30, compared to the corresponding region-based
+                                                                                                   e-MPC.
+
+                                                                                                3) The e-MPC simulation results with hydraulic actuators
+                                                                                                   along a ride comfort road show reductions of the RMS
+                                                                                                   values of the sprung mass accelerations in excess of 45%
+                                                                                                   relative to the passive car, and a further benefit (up to
+                                                                                                   35%) is achieved with the addition of preview.
+
+                                                                                                4) The preliminary experimental results along two speed
+                                                                                                   bump road inputs on a vehicle demonstrator with active
+                                                                                                   suspension actuators show that, compared to the more
+THEUNISSEN et al.: REGIONLESS EXPLICIT MPC OF ACTIVE SUSPENSION SYSTEMS WITH PREVIEW  4887
+
+       conventional skyhook, the e-MPC without preview im-                          [21] P. Li, J. Lam, and K. Chung Cheung, "Multi-objective control for active
+       proves primary ride performance--with reductions of                                vehicle suspension with wheelbase preview," J. Sound Vib., vol. 333,
+       primary ride vehicle body accelerations ranging from 7                             no. 21, pp. 5269­5282, 2014.
+       to 17%. The addition of preview further reduces primary
+       ride accelerations by 8 to 21%. All the evaluated e-MPC                      [22] R. K. Mehra, J. N. Amin, K. J. Hedrick, C. Osorio, and S. Gopalasamy,
+       implementations improve the vibration total value in the                           "Active suspension using preview information and model predictive con-
+       0­15 Hz frequency range, which indicates their overall                             trol," in Proc. IEEE Int. Conf. Control Appl., 1997, pp. 860­865.
+       ride comfort enhancement capability.
+   Future developments will include the systematic optimization                     [23] M. D. Donahue and J. K. Hedrick, "Implementation of an active suspen-
+of the tuning parameters of the proposed controllers, and the as-                         sion, preview controller for improved ride comfort," 2002.
+sessment of centralized control approaches based on regionless
+e-MPC technology.                                                                   [24] M. Ahmed and F. Svaricek, "Preview optimal control of vehicle semi-
+                                                                                          active suspension based on partitioning of chassis acceleration and tire
+                                REFERENCES                                                load spectra," in Proc. IEEE Eur. Control Conf., 2014, pp. 1669­1674.
+
+ [1] E.K. Bender, "Optimum linear preview control with application to vehicle       [25] S. De Bruyne, H. Van der Auweraer, and J. Anthonis, "Preview control of
+      suspension," J. Basic Eng., vol. 90, no. 2, pp. 213­221, 1968.                      a constrained hydraulic active suspension system," in Proc. IEEE Conf.
+                                                                                          Decis. Control, 2012, pp. 4400­4405.
+ [2] Y. Iwata and M. Nakano, "Optimum preview control of vehicle air sus-
+      pension," Bull. Jpn. Soc. Mech. Eng., vol. 19, no. 138, pp. 1485­1489,        [26] S.M. Savaresi et al., "Optimal Strategy for Semi-Active Suspensions
+      1976.                                                                               and Benchmark," in Semi-Active Suspension Control Design for Vehicles,
+                                                                                          Amsterdam, The Netherlands: Elsevier, 2010, ch. 5.
+ [3] Y. Iwata and M. Nakano, "Optimal preview control of vehicle suspension,"
+      Bull. Jpn. Soc. Mech. Eng., vol. 19, no. 129, pp. 265­273, 1976.              [27] C. Go¨hrle et al., "Design and vehicle implementation of preview active
+                                                                                          suspension controllers," IEEE Trans. Control Sys. Technol., vol. 22, no. 3,
+ [4] W. A. H. Oraby, M. A. Aly, S. M. El-Demerdash, and A. M. Selim,                      pp. 1135­1142, May 2014.
+      "Influence of active suspension preview control on the vehicle lateral
+      dynamics," SAE Tech. Paper 2007-01-2347, 2007.                                [28] C. Go¨hrle et al., "Road profile estimation and preview control for low-
+                                                                                          bandwidth active suspension systems," IEEE/ASME Trans. Mechatronics,
+ [5] R. Streiter, "Active preview suspension system ABC prescan in the F700,"             vol. 20, no. 5, pp. 2299­2310, Oct. 2015.
+      ATZ Worldwide, vol. 110, pp. 4­11, 2008.
+                                                                                    [29] M.Q. Nguyen, M. Canale, O. Sename, and L. Dugard, "A model predictive
+ [6] A. Schindler, "Neue Konzeption und erstmalige realisierung eines aktiven             control approach for semi-active suspension control problem of a full car,"
+      Fahrwerks mit preview-strategie," Ph.D. thesis, Karlsruhe Inst. Technol.,           in Proc. IEEE Conf. Decis. Control, 2016, pp. 721­726.
+      Karlsruhe, Germany, 2009.
+                                                                                    [30] L. Xu, H. E. Tseng, and D. Hrovat, "Hybrid model predictive control of
+ [7] M. Kaldas et al., "Preview enhanced rule-optimized fuzzy logic damper                active suspension with travel limits and nonlinear tire contact force," in
+      controller," SAE Tech. Paper 2014-01-0868, 2014.                                    Proc. Amer. Control Conf., 2016, pp. 2415­2420.
+
+ [8] A. Desikan and V. Kalaichelvi, "Design for a semi-active preview suspen-       [31] K. C¸ alis¸kan, R. Henze, and F. Ku¨c¸u¨kay, "Potential of road preview for
+      sion system using fuzzy-logic control and image processing techniques,"             suspension control under transient road inputs," IFAC Proc., vol. 49, no. 3,
+      presented at the IEEE Int. Conf. Cyber Technol. Automat., Control Intell.           pp. 117­122, 2016.
+      Syst., 2015.
+                                                                                    [32] A. Bemporad, M. Morari, V. Dua, and E.N. Pistikopoulos, "The explicit
+ [9] A. M. A. Soliman and D. A. Crolla, "Limited bandwidth active suspension              solution of model predictive control via multiparametric quadratic pro-
+      employing wheel base preview," SAE Tech. Paper 2001-01-1063, 2001.                  gramming," in Proc. Amer. Control Conf., 2000, vol. 2, pp. 872­876.
+
+[10] F. Jun-ping, Y. Shao-yi, and Z. Lan-chun, "Research on wheelbase preview       [33] A. Bemporad, F. Borrelli, and M. Morari, "Model predictive control based
+      control for vehicle semi-active suspension based on neural networks,"               on linear programming ­ The explicit solution," IEEE Trans. Autom. Con-
+      presented at the IEEE Int. Symp. Intell. Inf. Technol. Appl., 2009.                 trol, vol. 47, no. 12, pp. 1974­1985, Dec. 2003.
+
+[11] M. Tomizuka, "Optimal preview control with application to vehicle sus-         [34] F. Borrelli, M. Baotic, J. Pekar, and G. Stewart, "On the computation of
+      pension," J. Dyn. Syst., Meas., Control, vol. 98, no. 3, pp. 309­315,               linear model predictive control laws," Automatica, vol. 46, no. 6, pp. 1035­
+      1976.                                                                               1041, 2010.
+
+[12] A. Hac, "Optimal linear preview control of active vehicle suspension," in      [35] M. Kvasnica, B. Taka´cs, J. Holaza, and S. Di Cairano, "On region-free
+      Proc. IEEE Conf. Decis. Control, 1990, pp. 2779­2784.                               explicit model predictive control," in Proc. IEEE Conf. Decis. Control,
+                                                                                          2015, pp. 3669­3674.
+[13] M. A. H. van der Aa, J. H. E. A. Muijdernan, and F. E. Veldpaus, "Con-
+      strained optimal control of semi-active suspension systems with preview,"     [36] N. Giorgetti, A. Bemporad, and H. E. Tseng, "Hybrid model predictive
+      Veh. Syst. Dyn., vol. 28, no. 4/5, pp. 307­323, 1997.                               control application towards optimal semi-active suspension," Int. J. Con-
+                                                                                          trol, vol. 79, no. 5, pp. 521­533, 2006.
+[14] D. Martinus, B. Soenarko, and Y. Y. Nazaruddin, "Optimal control design
+      with preview for semi-active suspension on a half-vehicle model," in Proc.    [37] L.H. Cseko, M. Kvasnica, and B. Lantos, "Analysis of the explicit model
+      IEEE Conf. Decisi. Control, 1996, pp. 2798­2803.                                    predictive control for semi-active suspension," Periodica Polytechnica
+                                                                                          Elect. Eng., vol. 54, no. 1-2, pp. 41­58, 2010.
+[15] A. G. Thompson and C. E. M. Pearce, "Performance index for a preview
+      active suspension applied to a quarter-car model," Veh. Syst. Dyn., vol. 35,  [38] M. Canale, M. Milanese, C. Novara, and Z. Ahmad, "Semi-active sus-
+      no. 1, pp. 55­66, 2001.                                                             pension control using "Fast" model predictive techniques," IEEE Trans.
+                                                                                          Control Syst. Technol., vol. 14, no. 6, pp. 1034­1046, Nov. 2006.
+[16] G. Prokop and R.S. Sharp, "Performance enhancement of limited band-
+      width active automotive suspensions by road preview," IEEE J. Control         [39] T. Paschedag, A. Giu, and C. Seatzu, "Constrained optimal control: An
+      Theory Appl., vol. 142, no. 2, pp. 140­148, Mar. 1995.                              application to semiactive suspension systems," Int. J. Sys. Sci., vol. 47,
+                                                                                          no. 7, pp. 797­811, 2010.
+[17] H. J. Kim, H. S. Yang, and Y. P. Park, "Improving the vehicle performance
+      with active suspension using road-sensing algorithm," J. Comput. Struct.,     [40] J. Theunissen et al., "Explicit model predictive control of active suspen-
+      vol. 80, no. 18­19, pp. 1569­1577, 2002.                                            sion systems," in Proc. Int. Conf. Adv. Veh. Powertrains, 2017, pp. 1­19.
+
+[18] A. Akbari and B. Lohmann, "Output feedback H/GH2 preview control               [41] G. Montanez, D. Patino, and D. Mendez, "Comparison of model predic-
+      of active vehicle suspensions: A comparison study of LQG preview,"                  tive control techniques for active suspension," in Proc. Int. Conf. Appl.
+      J. Veh. Syst.Dyn., vol. 48, no. 12, pp. 1475­1494, 2010.                            Electron., 2015, pp. 157­160.
+
+[19] R. S. Prabakar, C. Sujatha, and S. Narayanan, "Optimal semi-active pre-        [42] W.F. Milliken and D.L. Milliken, Race Car Vehicle Dynamics, Warrendale,
+      view control response of a half car vehicle model with magnetorheological           PA, USA: SAE Int., 1995.
+      damper," J. Sound Vib., vol. 326, no. 3­5, pp. 400­420, 2009.
+                                                                                    [43] S. Fallah, A. Sorniotti, and P. Gruber, "A novel robust optimal active con-
+[20] S. Ryu, Y. Park, and M. Suh, "Ride quality analysis of a tracked vehicle             trol of vehicle suspension systems," IFAC Proc., vol. 47, no. 3, pp. 11213­
+      suspension with a preview control," J. Terramechanics, vol. 48, no. 6,              11218, 2014.
+      pp. 409­417, 2011.
+                                                                                    [44] D. Hrovat, "Survey of advanced suspension developments and related
+                                                                                          optimal control applications," Automatica, vol. 33, no. 10, pp. 1781­1817,
+                                                                                          1997.
+
+                                                                                    [45] J. Drgona, M. Klauco, F. Janecek, and M. Kvasnica, "Optimal control
+                                                                                          of a laboratory binary distillation column via regionless explicit MPC,"
+                                                                                          Comput. Chem. Eng., vol. 96, pp. 139­148, 2017.
+
+                                                                                    [46] C. Jablonowski, V. Underberg, and M. Paefgen, "The chassis of the
+                                                                                          all new Audi Q7," in Proc. 6th Int. Munich Chassis Symp., 2015,
+                                                                                          pp. 37­49.
+4888  IEEE TRANSACTIONS ON INDUSTRIAL ELECTRONICS, VOL. 67, NO. 6, JUNE 2020
+
+[47] M. Anderson and D. Harty, "Unsprung mass with in-wheel motors - myths                                      Saber Fallah received the B.Sc. degree from the
+      and realities," in Proc. 10th Int. Symp. Adv. Veh. Control, Loughborough,                                 Isfahan University of Technology, Isfahan, Iran,
+      U.K., Aug. 22­26, 2010, pp. 261­266.                                                                      in 2001, the M.Sc. degree from Shiraz University,
+                                                                                                                Shiraz, Iran, in 2004, and the Ph.D. degree from
+[48] Mechanical Vibration - Road Surface Profiles - Reporting of Measured                                       Concordia University, Montreal, QC, Canada, in
+      Data, ISO 8608:2016, 2016.                                                                                2010, all in mechanical engineering.
+
+[49] M. Kvasnica, "Multi-Parametric Toolbox 3," [Online]. Available:                                                He is a Senior Lecturer of Vehicle and Mecha-
+      http://people.ee.ethz.ch/mpt/3/. Accessed: Jul. 12, 2019.                                                 tronic Systems with the University of Surrey,
+                                                                                                                Guildford, U.K. His research interests include ve-
+[50] D.Q. Mayne, J.B. Rawlings, C.V. Rao, and P.O. Scokaert, "Constrained                                       hicle dynamics and control, electric and hybrid
+      model predictive control: Stability and optimality," Automatica, vol. 36,                                 electric vehicles, intelligent vehicles, and vehicle
+      no. 6, pp. 789­814, 2000.                                                  system design and integration.
+
+[51] D. Karnopp, M.J. Crosby, and R.A. Harwood, "Vibration control using
+      semi-active force generators," J. Eng. Ind., vol. 96, no. 2, pp. 619­626,
+      1974.
+
+[52] Mechanical Vibration and Shock - Evaluation of Human Exposure to
+      Whole-Body Vibration - Part 1: General Requirements, ISO 2631-1, 1997.
+
+      Johan Theunissen received the M.Sc. degree                                                                Marco Ricco received the M.Sc. degree in me-
+      in electro-mechanical engineering from the K.U.                                                           chanical engineering from the Politecnico di
+      Leuven, Leuven, Belgium, in 2008, and the Ph.D.                                                           Torino, Turin, Italy, in 2018. He is currently work-
+      degree in automotive engineering from the Uni-                                                            ing toward the Ph.D. degree in automotive engi-
+      versity of Surrey, Guildford, U.K., in 2019.                                                              neering with the University of Surrey, Guildford,
+                                                                                                                U.K.
+         He recently founded Simmanco, an engineer-
+      ing company focusing on mechatronics and au-                                                                   His research interests include electric vehi-
+      tomotive. Earlier in his carreer, he worked for                                                           cles, vehicle dynamics and vehicle testing.
+      Ford Motor Company, Flanders' DRIVE and Ten-
+      neco Automotive Europe, as a Project Engineer                                                             Michal Kvasnica received the Diploma in pro-
+      and a Project Manager.                                                                                    cess control from the Slovak University of Tech-
+                                                                                                                nology (STUBA), Bratislava, Slovakia, in 2000,
+      Aldo Sorniotti (M'12) received the M.Sc. de-                                                              and the Ph.D. degree in electrical engineering
+      gree in mechanical engineering and the Ph.D.                                                              from the Swiss Federal Institute of Technology,
+      degree in applied mechanics from the Politec-                                                             Zurich, Switzerland, in 2008.
+      nico di Torino, Turin, Italy, in 2001 and 2005,
+      respectively.                                                                                                 He is an Associate Professor (docent) of Au-
+                                                                                                                tomation with STUBA. His research interests in-
+         He is a Professor in Advanced Vehicle Engi-                                                            clude decision making and control supported
+      neering with the University of Surrey, Guildford,                                                         by artificial intelligence, embedded optimization
+      U.K., where he coordinates the Centre for Au-                                                             and control, security and safety of cyber-physical
+      tomotive Engineering. His research interests in-                           systems, and control of human-in-the-loop systems.
+      clude vehicle dynamics control and transmission
+      systems for electric and hybrid electric vehicles.
+
+      Patrick Gruber received the M.Sc. degree in                                                               Miguel Dhaens received the M.Sc. degree
+      motorsport engineering and management from                                                                in electro-mechanical engineering from KIH,
+      Cranfield University, Cranfield, U.K., in 2005,                                                           Ostend, Belgium.
+      and the Ph.D. degree in mechanical engineering
+      from the University of Surrey, Guildford, U.K., in                                                            He is Engineering Manager of the Global Re-
+      2009.                                                                                                     search Ride Performance Team of Tenneco, and
+                                                                                                                responsible for defining the research road map
+          He is a Reader in advanced vehicle sys-                                                               and coordinating the global research activities
+      tems engineering with the University of Surrey.                                                           of Tenneco's Ride Performance business, which
+      His research interests include vehicle dynamics                                                           includes vehicle dynamics, damping solutions,
+      and tire dynamics with special focus on friction                                                          mechatronics, material science, manufacturing
+      behavior.                                                                                                 technologies and predictive tools. Before joining
+                                                                                 Tenneco, he worked with the Formula One team of Toyota Motorsport
+                                                                                 GmbH, Germany, as Manager of the engine, testing and advanced strate-
+                                                                                 gies teams, and with Flanders' DRIVE as R&D Manager.
+

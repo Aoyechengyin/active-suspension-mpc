@@ -1,0 +1,662 @@
+                                                                                               Automatica 46 (2010) 1035­1041
+
+                                                                      Contents lists available at ScienceDirect
+
+                                                Automatica
+
+                                                          journal homepage: www.elsevier.com/locate/automatica
+
+Brief paper
+
+On the computation of linear model predictive control laws$
+
+Francesco Borrelli a,, Mato Baoti b, Jaroslav Pekar c, Greg Stewart d
+
+a Department of Mechanical Engineering, University of California, Berkeley, 94720-1740, USA
+b Faculty of Electrical Engineering and Computing, University of Zagreb, Unska 3, 10000 Zagreb, Croatia
+c Honeywell Prague Laboratory, V Parku 2326/18, 14800 Prague 4, Czech Republic
+d Honeywell Automation and Control Solutions, North Vancouver, BC V7J 3S4, Canada
+
+article info                   abstract
+
+Article history:               Finite-time optimal control problems with quadratic performance index for linear systems with linear
+Received 10 June 2009          constraints can be transformed into Quadratic Programs (QPs). Model Predictive Control requires the on-
+Received in revised form       line solution of such QPs. This can be obtained by using a QP solver or evaluating the associated explicit
+22 December 2009               solution. The objective of this note is twofold. First, we shed some light on the computational complexity
+Accepted 21 February 2010      and storage demand of the two approaches when an active set QP solver is used. Second, we show the
+Available online 8 April 2010  existence of alternative algorithms with a different tradeoff between memory and computational time.
+                               In particular, we present an algorithm which, for a certain class of systems, outperforms standard explicit
+Keywords:                      solvers both in terms of memory and worst case computational time.
+Model predictive control
+Explicit MPC                                                                                                        © 2010 Elsevier Ltd. All rights reserved.
+Active set QP solver
+Fast MPC
+
+1. Introduction                                                                         The objective of this note is twofold. The first part sheds some
+                                                                                    light on the complexity of the on-line solution of a quadratic
+    In Bemporad, Morari, Dua, and Pistikopoulos (2002) the authors                  program (by means of an active set QP solver) versus the on-
+have shown how to compute the solution to constrained finite-                       line evaluation of the explicit solution (by means of an ``explicit
+time optimal control (CFTOC) problem for discrete-time linear                       solver''). We focus on the three main components of an active set
+systems as a piecewise affine (PWA) state-feedback law. Such a                      QP algorithm and of an explicit solver: (1) the amount of stored
+law is computed off-line by using a multi-parametric programming                    data, (2) the optimality certificate, i.e. validation of the optimality
+solver which divides the state space into polyhedral regions,                       conditions and (3) the selection of the next active set if the
+and for each region determines the linear gain and offset which                     validation of the optimality fails. We carefully compare the three
+produces the optimal control action. This state-feedback law is                     components in active set QP algorithms and explicit solvers and
+often referred to as the ``explicit solution''.                                     pinpoint the tradeoff between computational time and memory
+                                                                                    requirements. The second part builds on the first part and shows
+    At each sampling time a Model Predictive Control (MPC)                          that there is a range of alternative approaches which trade off
+strategy (Mayne, Rawlings, Rao, & Scokaert, 2000) requires the                      memory and computational time in a different way compared to
+solution of an open-loop CFTOC problem, which, for a quadratic                      both active set QPs and explicit solvers. In particular we present an
+performance index and known (measured/estimated) system                             algorithm that, for certain classes of systems, outperforms explicit
+state, corresponds to solving a Quadratic Program (QP). Having                      solvers both in terms of memory and computational time.
+a precomputed solution as an explicit piecewise affine function
+of the state vector reduces the on-line computation of the MPC                          We remark that the main objective of this paper is to show
+control law to a function evaluation, thus avoiding the on-line                     that, depending on the problem and on the hardware platform,
+solution of a quadratic program.                                                    there might be alternative and more efficient ways for computing
+                                                                                    explicit linear MPC laws. However, the corresponding state-
+ $ The material in this paper was partially presented at European Control           feedback controllers do not have the nice piecewise affine closed-
+Conference August 2009, Budapest and the Conference on Decision and Control,        form solution as the explicit solution presented in Bemporad et al.
+December 2009, Shanghai. This paper was recommended for publication in revised      (2002). It is not the intent of this paper to compare the proposed
+form by Associate Editor Martin Guay under the direction of Editor Frank Allgöwer.  algorithms with other very efficient explicit solvers appeared in
+                                                                                    the literature (Baoti, Borrelli, Bemporad, & Morari, 2008; Jones,
+  Corresponding author. Tel.: +1 510 643 3871; fax: +1 510 643 5599.                Grieder, & Rakovi, 2005), or fast QP solvers (Ferreau, Bock, &
+                                                                                    Diehl, 2008; Milman & Davison, 2008; Santos, Afonso, Castro,
+     E-mail addresses: fborrelli@me.berkeley.edu (F. Borrelli), mato.baotic@fer.hr  Oliveira, & Biegler, 2001; Wang & Boyd, 2008) tailored to the
+(M. Baoti), jaroslav.pekar@Honeywell.com (J. Pekar),
+greg.stewart@Honeywell.com (G. Stewart).
+
+0005-1098/$ ­ see front matter © 2010 Elsevier Ltd. All rights reserved.
+doi:10.1016/j.automatica.2010.02.031
+1036                                                     F. Borrelli et al. / Automatica 46 (2010) 1035­1041
+
+specific structure of the underlying optimal control problem or                  where x = x0, the column vector U := [u0, . . . , uN-1]  Rn,
+suboptimal explicit solution. The comparison would be problem                    n := nuN, is the optimization vector, H = H 0, and H, F , W , G,
+dependent and requires the simultaneous analysis of several issues
+such as speed of computation, storage demand and real time code                  Bx, br are easily obtained from Q x, Q u, Q xN and (3) (see Bemporad
+verifiability. This is an involved study and as such is outside of the           et al. (2002) for details). Because the problem depends on x the
+scope of this paper.                                                             implementation of MPC can be performed either by solving the
+                                                                                 QP (5) on-line or, as shown in Bemporad et al. (2002), by solving
+2. Notation                                                                      problem (5) off-line for all x within a given range of values, i.e., by
+                                                                                 considering (5) as a multi-parametric Quadratic Program (mp-QP).
+    Throughout this paper (lower and upper case) italic letters
+                                                                                     In Bemporad et al. (2002) the authors give a self-contained
+denote scalars, vectors and matrices (e.g., A, a, . . .), while upper            proof of the following properties of the mp-QP solution.
+case calligraphic letters denote sets (e.g., A, B, . . .). R is the set
+of real numbers, N is the set of positive integer numbers. For a                 Theorem 1. Consider the multi-parametric quadratic program (5)
+
+matrix (vector) A, A denotes its transpose, while Ai denotes the                 and let H 0. Then the set of feasible parameters Xf  Rnx is
+                                                                                 convex, the optimizer U : Xf  Rn is continuous and piecewise
+ith row (element). For a set A, |A| denotes its cardinality (number              affine (PWA), and the value function J : Xf  R is continuous,
+of elements), and A(k) denotes the kth element. Given the matrix
+G  Rm×n, then for any set A  {1, . . . , m}, GA denotes the                      convex and piecewise quadratic.
+submatrix of G consisting of the rows indexed by A. Q 0 denotes
+                                                                                     Once the multi-parametric problem (5) is solved off-line, i.e.,
+positive definiteness (resp., Q 0 positive semidefiniteness) of a
+                                                                                 the solution U(x) = fPWA(x) of the CFTOC problem (5) is found,
+square matrix Q . With :=  ( =: ) we denote that is defined
+by  ( is defined by ).                                                           then the state-feedback PWA MPC law can be simply obtained by
+
+                                                                                 extracting first nu elements of fPWA(x)
+
+3. CFTOC and its state-feedback PWA solution                                     u(t) = [Inu 0nu×(n-nu)]fPWA(x(t)).                       (6)
+
+                                                                                 Therefore by using a multi-parametric solver the computation of a
+
+Consider the discrete-time linear time-invariant system                          MPC law becomes a piecewise affine function evaluation.
+
+x(t + 1) = Ax(t) + Bu(t)                                               (1)       4. Active set algorithms versus explicit solvers
+
+subject to the constraints
+
+Exx(t) + Euu(t)  E                                                     (2)           The objective of this section is to compare computational time
+                                                                                 and storage demand associated to (i) active set QPs for solving (5)
+at all time instants t  0.                                                       and to (ii) the evaluation of the explicit solution (6). For the sake of
+                                                                                 better readability we rewrite (5) compactly as
+   In (1)­(2), nx  N, nu  N and nE  N are the number of states,
+inputs and constraints respectively, x(t)  Rnx is the state vector,              min   1  U HU + g(x) U
+u(t)  Rnu is the input vector, A  Rnx×nx , B  Rnx×nu , Ex  RnE ×nx ,
+Eu  RnE ×nu , E  RnE , and the vector inequality (2) is considered               U     2                                                  (7)
+
+elementwise.                                                                     subj. to GU  b(x)
+
+   Let x0 = x(0) be the initial state and consider the constrained               where G  Rm×n, b(x)  Rm, g(x)  Rn, g(x) := F x and
+                                                                                 b(x) := br + Bxx. Here we assume, without loss of generality,
+finite-time optimal control (CFTOC) problem                                      that W = 0. The solution to the problem (7) for a fixed x is fully
+
+                                              N -1                               characterized by the set of Karush Kuhn Tucker (KKT) conditions:
+
+J(x0) := min                    xN Q xN xN +        xkQ xxk + ukQ uuk
+                             U
+                                                    k=0
+                                                                       (3)       HU + GA  + g(x) = 0                                      (8a)
+                                   xk+1 = Axk + Buk,
+           subj. to Exxk + Euuk  E,
+                                                                                 GA U  = bA (x),                                          (8b)
+                                   k = 0, . . . , N - 1
+
+where N  N is the horizon length, Q x = (Q x)                          0, Q u =    0,                                                     (8c)
+
+(Q u)  0, Q xN = (Q xN )           0, U := [u0, . . . , uN-1]  RnuN is           GI\A U  < bI\A (x),                                      (8d)
+
+the optimization vector, xi denotes the state at time i if the initial           where I denotes the set of all constraint indices I := {1, . . . , m},
+                                                                                 A = A(x) is the set of active constraints at U(x):
+state is x0 and the control sequence {u0, . . . , ui-1} is applied to the
+system (1), J : Rnx  R is the value function.
+
+Consider the problem of regulating to the origin the discrete-                   A(x) := {j  I : GjU(x) = bj(x)},                         (9)
+
+time linear time-invariant system (1) while fulfilling the con-                  and  = (x)  R|A| are Lagrange multipliers.
+
+straints (2). The solution U to CFTOC problem (3) is an open-loop                    In the optimization field, the variety of QP algorithms is very
+                                                                                 rich and their performance depends on the type of problem. In this
+optimal control trajectory over a finite horizon. A Model Predictive             note, we prefer to highlight the main differences between the two
+                                                                                 approaches (on-line versus explicit) and corresponding changes in
+Control (MPC) (Mayne et al., 2000) strategy employs it to obtain a               computational time and storage demand rather than selecting a
+                                                                                 specific QP implementation and carrying an exact computation. For
+feedback control law in the following way: assume that a full mea-               this reason, in the following Section 4.1, we present the main steps
+                                                                                 of a simple active set QP algorithm and in Section 4.2 we present
+surement of the state x(t) is available at the current time t  0.                the main steps of an explicit solver. For the same reason, we will
+                                                                                 not cover the variety of pivoting rules for the degenerate QP case.
+Then, the CFTOC problem (3) is solved at each time t for x0 = x(t),              If the presented algorithms terminate without assigning U, then
+                                                                                 the problem (7) is infeasible for the given x.
+and
+
+u(t) = u0                                                              (4)
+
+is applied as an input to system (1).
+
+3.1. Solution of CFTOC
+
+    Consider the CFTOC problem (3). This can be rewritten as the                 4.1. Active set QP solver
+quadratic program (Bemporad et al., 2002)
+                                                                                     Before presenting an active set method for solving the QP (7),
+J(x) = min                      1                   1
+                          U        U HU + x FU + x Wx                            we will first consider a subset A of the constraints index A  I
+                                2                   2                  (5)
+           subj. to GU  br + Bxx
+                                            F. Borrelli et al. / Automatica 46 (2010) 1035­1041                                  1037
+
+and the following equality constrained QP:                               before. In particular, with the QR decomposition of GA as in (14),
+                                                                         and Z and Y defined by (15) we get
+        1
+min        U HU + g(x) U                                                 (k) = -Z (Z HZ )-1Z (g(x) + HU),
+U       2                                                       (10)                                                             (18)
+
+subj. to GAU = bA(x).                                                    (k) = (Y - Y HZ (Z HZ )-1Z )(g(x) + HU).                (19)
+
+A Lagrangian method (Fletcher, 1987, p. 229) solves the equality             Three cases are possible after solving (17):
+constrained QP (10) by computing a solution to the KKT conditions,
+compactly written as:                                                    (1) (k) = 0. If all Lagrange multipliers are nonnegative then U(k)
+
+H GA       U        =  -g (x)  .                                (11)          is the optimum for (7). Otherwise, find the constraint with the
+GA 0                   bA(x)                                                  smallest Lagrange multiplier, remove it from A, and iterate the
+                                                                              procedure.
+
+The solution to (11) has the form                                        (2) (k) = 0 and U (k) + (k) is feasible for (7). Set U = U (k) + (k),
+                                                                              keep A, and iterate the procedure.
+U = -Lg(x) + TbA(x),                                            (12a)
+ = -T g(x) + SbA(x).                                            (12b)    (3) (k) = 0 and U (k) + (k) is not feasible for (7). Then find the
+                                                                             best feasible point U = U(k) + (k) with a line search in the
+                                                                             direction of (k). Add the newly activated constraints (by U) to
+                                                                              A and iterate the procedure.
+
+The symmetric matrix in (11) is referred as the Lagrangian matrix.       The whole procedure is summarized in Algorithm 1.
+If the Lagrangian matrix is nonsingular then the matrices L, T and
+S can be extracted from its inverse                                      Algorithm 1 Active set method for QP (7)
+
+                        -1                                               Input: H, g(x), G, b(x), initial feasible U (GU  b(x))
+
+L    T     H        GA     .                                    (13)     Output: U
+T                    0
+     S = GA                                                              1: k  1, A  {i  I | GiU = bi(x)}
+                                                                         2: A(k)  A, U (k)  U
+Several alternatives for solving (13) can be found in Fletcher (1987,    3: Compute (k) by (18)
+                                                                         4: if (k) = 0 then
+p. 236). In particular, there are instances when the Lagrangian          5: Compute (k) by (19)
+                                                                         6: if (k)  0 then
+matrix in (11) is not invertible. This happens when GA is not a full         return U   U (k)
+row-rank matrix. In this case any feasible point U can be written        7:
+
+as U = YbA(x) + Zy, where y  Rn-m1 , with m1 being the rank               8: end if
+of GA. One possibility for computing U and  is to use the QR
+                                                                          9: A  A \ A(argminiAi(k))
+factorization of the matrix GA                                           10: Compute (k) by (18)
+
+GA = Q  R  = [Q1 Q2]    R     = Q1R                             (14)     11: end if
+        0               0
+                                                                         12: Compute
+
+where Q  Rn×n is orthogonal, R  Rm1×m1 is upper triangular and                = min   1,              min         bj(x) - GjU    (20)
+Q1  Rn×m1 and Q2  Rn×(n-m1). Then with the choice of                                                                 Gj(k)
+                                                                                                 jI\A,Gj  (k) >0
+
+Y = Q1R-1 , Z = Q2,                                             (15)     13: U  U (k) + (k)
+                                                                         14: if  < 1 then
+we get (cf. Fletcher, 1987, Eq. 10.2.7) the solution (12) with
+                                                                         15: A  A  {j}, where j is the argmin of (20)
+
+L = Z (Z HZ )-1Z ,                                                       16: end if
+
+                                                                         17: k  k + 1, goto 2
+
+T = -Y + Z (Z HZ )-1Z HY ,                                      (16)
+
+S = -Y HY + Y HZ (Z HZ )-1Z HY .                                         Alternative simple algorithm
+
+Alternative approaches for computing U and  can be found in                  The algorithm presented in this section is not typically used
+                                                                         to solve QPs. It is introduced to better understand the issues
+Fletcher (1987). We remark that they all consists in manipulating        involved with the explicit algorithms presented later in this paper.
+                                                                         Compared to Algorithm 1, the algorithm proposed in this section
+(11) and, after a certain number of operations, obtaining U and .        does not require a feasible initial point and does not provide primal
+                                                                         feasible solutions at intermediate steps.
+    A primal active set method is one of the most common method
+for solving the QP (7) for a fixed x. Next the main ingredients             At each iteration k, an active constraint set A = A(k) is known
+of its implementation extracted from Fletcher (1987) are briefly         and the Eq. (11) is solved to obtain U(k) = U and (k) = . The
+recalled.
+                                                                         algorithm proceeds as follows:
+    At each iteration k the following auxiliary problem is solved        (1) If U(k) is not feasible for the QP (7), then find the constraint that
+
+min     1   H + (g(x) + HU)                                                   is violated the most, included it into the active set A and iterate
+                                                                              the procedure.
+        2                                                       (17)     (2) Find the smallest Lagrange multiplier. If it is nonnegative
+                                                                              the optimum is found. Otherwise, remove the constraint it
+subj. to GA = 0                                                               corresponds to from the active set A and iterate the procedure.
+
+where U = U(k) is a known feasible point for the QP (7) and              The two steps above are the main components of the Algorithm 2.
+A = A(k) := {j  I : GjU(k) = bj(x)} is the associated active
+                                                                         Remark 4.1. We remark that the storage demand, optimality
+constraint set.                                                          certificate and active set selection for Algorithm 1 are identical
+                                                                         to Algorithm 2. The only difference between Algorithms 1 and 2
+   Problem (17) is an equality constrained QP. Let (k)  Rn denote
+the optimizer of (17) and let (k)  R|A| be the corresponding
+vector of Lagrange multipliers. We note that (k) is the best
+
+correction to U in the direction where the constraints A are active.
+
+Since (17) is just a special case of (10) it can be solved as explained
+1038                                          F. Borrelli et al. / Automatica 46 (2010) 1035­1041
+
+Algorithm 2 Modified active set method for QP (7)                         where Q i  Rpi , Pi  Rpi×nx , and pi  m is the minimal number of
+                                                                          halfspaces defining polyhedron CRAi .
+Input: H, g(x), G, b(x), initial A
+                                                                              An mp-QP algorithm determines the partition of K into critical
+Output: U                                                                 regions CRAi , and finds the expression of the functions U(·) for
+
+1: k  1                                                                   each critical region. Let NP denote the total number of critical
+2: A(k)  A                                                                regions. The explicit solution (21) of the QP (7) is
+
+3: Compute U (k) by (12a) and (16)                                        U(x) = F Ai x + cAi , x  CRAi , i = 1, . . . , NP ,                                 (28)
+
+4: j  argminjI\Abj(x) - GjU (k)                                           where F Ai               Rn×nx , cAi    Rn,        RAi   NP
+
+5: if Gj U (k) > bj then                                                                                                          }i=1
+
+6: A  A  {j}                                                                                                           {C               is  a  polyhedral
+
+7: else                                                                   partition of K (i.e., i CRAi = K, and CRAi and CRAj have
+
+8: Compute (k) by (12b) and (16)                                          disjoint interiors i = j), i = 1, . . . , NP . Note that in general
+                                                                            i=1,...,NP CRAi = K  K since for some x  K the QP (7)
+9: if (k)  0 then
+         return U   U (k)                                                 could be infeasible.
+10:
+
+11: end if                                                                    The evaluation of explicit solutions in its simplest form would
+
+12: A  A \ A(argminiA(i k))                                               require: (i) the storage of the list of polyhedral regions and of
+
+13: end if                                                                the corresponding affine control laws, (ii) a sequential search
+
+14: k  k + 1, goto 2                                                      through the list of polyhedra for the ith polyhedron that contains
+
+                                                                          the current state in order to implement the ith control law.
+
+is that the first guarantees primal feasibility of the intermediate       Since verifying if a point x belongs to a critical region means to
+solution at each step while the latter does not. This is obtained
+at the price of an initial feasible solution required to initialize       verify primal and dual conditions, then the on-line search for the
+Algorithm 1 and the additional steps in (20) required to compute a
+feasible solution.                                                        polyhedron containing x can be compared to the main steps of a QP
+
+                                                                          solver. The simplest implementation consists of searching for the
+
+                                                                          polyhedral region that contains the state x as in Algorithm 3.
+
+4.2. Explicit solution: off-line and on-line computation                  Algorithm 3 Explicit solution to QP (7)
+
+    The basic idea behind the computation of the explicit solution        Input: x, Pi, Q i, F Ai , cAi , i = 1, . . . , NP
+
+to QP (7) for a set of parameters x  K  Rnx can be described              Output: U
+
+as follows. Consider an active set A = Ai and the primal and dual         1: for i  1 to NP do
+solution U,  in (12) with (16). We note that (12) actually shows          2: if Pix  Q i then
+that U and  are affine functions of x since bA(x) and g(x) are
+                                                                          3:  return U   F Ai x + cAi
+affine functions of x, i.e.,
+                                                                          4: end if
+
+                                                                          5: end for
+
+U = (TBxA - LF )x + TbAr =: F Ax + cA,                       (21)
+ = (SBAx - T F )x + SbrA =: Ax +  A.
+                                                                          Remark 4.2. In MPC we need to store only the first nu components
+
+Furthermore, the expressions U(x) and (x) remain constant for             of F Ai and cAi , see (6). Denote by NH the total number of halfspaces
+                                                                                                                                        NP
+all x for which Ai is the active set at the optimum (note that in         defining the feasible polyhedral partition: NH :=             i=1    pi  .  It  is  easy
+
+this section the lower index i in Ai simply denotes a counter, while      to see that Algorithm 3 requires (nx + 1)NH real numbers to store
+in the previous section, the upper index (k) specifies variables at       all polyhedra CRAi and nuNP (nx + 1) real numbers to store the
+the kth step of the algorithm). Such region CRAi  Rnx is called
+                                                                          control laws, for a total of
+the ``critical region'' and is the set of all parameters x for which the
+                                                                          #reals = (nx + 1)NH + nuNP (nx + 1).                                                (29)
+constraints indexed by Ai are active at the optimizer of problem
+(7), i.e., CRAi := {x : A(x) = Ai}. The critical region CRAi can          Furthermore, in the worst case (when the state is contained in the
+be computed by imposing primal feasibility conditions (8d) on U
+                                                                          last region of the list) Algorithm 3 will give a solution after nxNH
+P Ai,p := {x  Rnx | GI\Ai U (x) < bI\Ai (x)}                 (22)
+                                                                          multiplications, (nx - 1)NH sums and NH comparisons. Hence,
+
+and dual feasibility conditions (8c) on                                   #operations  2nxNH .                                                                (30)
+
+P Ai,d := {x  Rnx | (x)  0}.                                 (23)         Algorithm 3 differs from Algorithm 2 in the way the next active set
+
+In conclusion, the critical region CRAi is the intersection of P Ai,p     (i.e. region) is chosen. One can easily modify Algorithm 3 to use the
+and P Ai,d, i.e., CRAi = P Ai,p  P Ai,d. Obviously, the closure of
+CRAi is a polyhedron in the x-space. Based on (21) we can rewrite         same active strategy of Algorithm 2 as follows. In the ith critical
+                                                                          region CRAi we separate the constraints deriving from primal
+the closure of the primal and dual polyhedron (22)­(23) as:
+                                                                          feasibility PIA\iAi x  QIA\iAi and the constraints deriving from dual
+P Ai,p = {x  Rnx | GI\Ai F Ai x  bI\Ai (x) - GI\Ai cAi }     (24)         feasibility PAAii x  QAAii . This idea is used in Algorithm 4, which can
+        = {x  Rnx | PjAi x  QjAi , for j  I \ Ai},           (25)
+                                                                          be interpreted as the ``off-line version'' of Algorithm 2. In Algorithm
+P Ai,d = {x  Rnx | -Ai x   Ai }
+        = {x  Rnx | PjAi x  QjAi , for j  Ai},                            4 we use the function idxA(B) to describe the following operation:
+                                                                          given the set B  A, where A := {A1, . . . , ANP }, extract the index
+thus obtaining                                                            i such that Ai = B.
+
+CRAi = {x  Rnx | PAi x  Q Ai },                              (26)             The ``off-line version'' of Algorithm 1 can be found in Borrelli,
+
+where Q Ai  R|I| = Rm, PAi  Rm×nx . Since the expression (26)             Baotic, Pekar, and Stewart (2010). Note that in such an algorithm
+
+may contain many redundant halfspaces, we may prefer to use the           the parameter space will comprise the system current state x and
+reduced description of CRAi                                               the (feasible) solution at the previous time step U(k).
+
+CRAi = {x  Rnx | Pix  Q i},                                  (27)         Remark 4.3. If redundant constraints have been removed from
+                                                                          primal and dual polyhedra, then Steps 3, 5, 7, 9 of Algorithm 4 need
+                                                                          to be modified accordingly.
+                                                      F. Borrelli et al. / Automatica 46 (2010) 1035­1041  1039
+
+Algorithm 4 Off-line version of Algorithm 2                                             At the generic step k of Algorithm 4, assume that constraint j
+
+Input: x, PAi , Q Ai , F Ai , cAi , i = 1, . . . , NP , initial i                   of the current critical region CRA(k) (say ajx  bj) is violated. Let
+                                                                                    A(k+1) = Ai, with i = idxA(A(k)  {j}) (i = idxA(A(k) \ {j})), be the
+Output: U
+                                                                                    new set of active constraints if j is a primal (dual) constraint. Then,
+1: for k  1 to NP do                                                                three cases can occur: (1) CRA(k+1) has been stored off-line by
+2: A(k)  Ai                                                                         Algorithm 4, (2) CRA(k+1) is not a full-dimensional critical region
+3: j  argminjI\Ai QjAi - PjAi x                                                     and (3) CRA(k+1) is empty. Case (2) is excluded by assumption. Case
+                                                                                    (3) can also be excluded by contradiction. In fact, assume there
+4: if PjA i x > QjA i then
+                                                                                    is no critical region in the half-space ajx > bj. Then ajx  bj
+5:      i  idxA(Ai  {j})                                                            is a facet of the region of feasible states K and therefore (since
+
+6: else                                                                             it is violated) x is not feasible, which contradicts the assumption.
+        j  argminjAi QjAi - PjAi x                                                  Therefore, the only admissible option is case (1) which proves the
+7:                                                                                  proposition.
+
+8:      if PjA i x > QjA i then                                                         Note that the presence of critical regions which are not full-
+                                                                                    dimensional is linked to degeneracies of the QP (7), see Spjøtvold,
+9:       i  idxA(Ai \ {j})                                                          Kerrigan, Jones, Tøndel, and Johansen (2006) and Tøndel, Johansen,
+                                                                                    and Bemporad (2003) for more details.
+10:     else
+                                                                                    (iv) When computing the critical regions (27) redundant con-
+11:      return U   F Ai x + cAi                                                          straints are removed. While, in general, this can improve the
+                                                                                          efficiency of Algorithm 4 versus Algorithm 2, by definition
+12:     end if                                                                            these constraints will not play any role in selecting the next
+                                                                                          set of active constraints.
+13: end if
+                                                                                    (v) From the above observation it is clear that Algorithm 4
+14: end for                                                                               requires less operations at each iteration than Algorithm 2.
+                                                                                          This is obtained at the price of increased memory requirement.
+5. Comparison between on-line and explicit algorithms                                     In fact, in Algorithm 4 the polyhedral partition and the gains
+                                                                                          have to be stored which, in general, largely surpass the
+    By comparing Algorithms 2 and 4 we can draw the following                             memory required for Algorithm 2 (simply the matrices of the
+conclusions:                                                                              QP (7)).
+
+(i) The active set strategy and the certificate of optimality are                       Comparing Algorithms 1 and 4 might be of interest since they
+                                                                                    are often the preferred choices of on-line and off-line methods,
+     the same. In particular, Step 8 in Algorithm 2 corresponds to                  respectively. The following observations should be considered.
+                                                                                    (1) If Algorithm 1 is initialized with a primal feasible solution
+     Step 7 in Algorithm 4. The difference is clear from Eq. (25).                  then it maintains primal feasibility. Algorithm 4 does not maintain
+                                                                                    primal feasibility. Note that the computation of an initial feasible
+     In the explicit Algorithm 4 the matrices PAAii and QAAii are                   solution might be a time-consuming task. By avoiding this step,
+     precomputed and stored. In the on-line QP Algorithm 2, PAAii                   Algorithm 4 improves on the average computational time. We
+     and QAAii are computed on-line                                                 remark that an efficient method for a warm-start of an active
+     Step 4 in Algorithm 2 requires  from (12b) and (16). Similarly,                set strategy was presented in Zeilinger, Jones, and Morari (2008).
+                                                                                    (2) In Algorithms 1 and 4, the active set strategy and the certificate
+                                     the computation of bI\A(x) -                   of optimality are the same. In particular, Step 5 in Algorithm
+                                                                                    1 corresponds to Step 7 in Algorithm 4. Similarly, Step 12 in
+     GI\AU (k) which corresponds to Step 3 in Algorithm 4. The
+                                                                                    Algorithm 1 requires the computation of bj(x) - GjU(k) which
+     difference is clear from Eq. (24). In the explicit Algorithm 4 the
+                                                                                    corresponds to Step 3 in Algorithm 4. The additional part of Step
+     matrices PIA\iAi and QIA\iAi are precomputed and stored. In the
+     on-line QP Algorithm 2, PIA\iAi and QIA\iAi are computed on-line               12 in Algorithm 1 consists in dividing bj(x) - GjU (k) by Gj(k) and
+     from (12a) and (16).                                                           computing . This is not required in the explicit solution because
+
+     Although Eqs. (12) and (16) can be efficiently computed, on-                   primal feasibility is not maintained in the explicit QP and thus the
+
+     line QR decomposition and several matrix multiplications are                   smallest step (k) guaranteeing primal feasibility does not need to
+
+     required at each time step. This is the cornerstone of the                     be computed. (3) Algorithms 1 and 4 can be properly compared
+                                                                                    only if they have the same initial set A. The number of such A
+     computational saving that can be achieved by explicit solvers                  might be small.
+
+     compared to on-line active set QPs.                                            Remark 5.1. Obtaining A(k+1) from A(k) (i.e., using the function
+                                                                                    idxA(·)) is immediate in Algorithm 1 since it corresponds to a
+(ii) Any modification which helps computing the L, T , and S in                     simple selection of different matrix rows. In Algorithm 4, if the
+                                                                                    list of neighboring regions is available, then idxA(A(k)  {j})
+     (16) will improve performance of Algorithm 2. However, a                       (or idxA(A(k) \ {j})) is not time consuming since it corresponds
+                                                                                    to identifying the neighboring region of a given facet of CRA(k) .
+     computational gap between Algorithms 2 and 4 will always                       However, the construction of neighboring region list can be a
+                                                                                    numerically sensitive issue for mp-QP solvers especially in the case
+     exist unless those matrices are pre-computed as in Algorithm                   of degeneracies. If the list of neighboring regions is not available
+                                                                                    then, the operation idxA(·) requires a search through a list of active
+     4. Any modification of the active set strategy or the optimality               constraints associated to all the stored region and it might be time
+                                                                                    consuming.
+     certificate can be applied to the explicit solution as well and
+
+     therefore it will not affect the comparison.
+
+(iii) Algorithms 2 and 4 can be properly compared only if they are
+
+     initialized with the same set A. Note that there might be active
+
+     constraint sets for which it is possible to initialize Algorithm
+
+     2 and not Algorithm 4. In fact, Algorithm 4 stores only full-
+
+     dimensional critical regions for which the corresponding set
+
+     A(k) is active at U(x) for some x, i.e., A(x) defined in (9).
+
+    The following proposition shows that if Algorithms 2 and 4 are
+initialized with the same set A then they explore the same active
+sets.
+
+Proposition 1. Assume that all the critical regions (27) of the
+
+QP (7) are full-dimensional polyhedra. Let x be a feasible state and
+consider Algorithm 4. If, at any time step k, A(k) corresponds to a
+
+full-dimensional critical region stored off-line by Algorithm 4, then
+A(k+1)                       iid=xAi(dAxA(k()A(k){j\}{)ja}n)danjd
+Step 3   = Ai, with i    =                                         computed as  in
+                                                                   j computed   as
+        of Algorithm 4  (or
+
+in Step 7 of Algorithm 4), corresponds to a full-dimensional critical
+
+region that has been stored off-line by Algorithm 4.
+1040                                          F. Borrelli et al. / Automatica 46 (2010) 1035­1041
+
+Remark 5.2. The comparison of Algorithms 3 and 2 is similar              numbers to store matrix G, m to store br , mnx to store Bx,
+to the comparison between Algorithms 2 and 4 with two main                                                      A(k)                                          S A(k)
+differences. Algorithm 3 corresponds to an active set QP where           n      NP   |A(k)|  to  store  all  T        and      NP   |A(k)|2       for  all            .  In  total
+the next active set is chosen according to a preassigned sequence.              k=1                                            k=1
+Although, on average it might perform worse than Algorithm 4, it         we get a total storage demand of
+does not require the computation of all dual variables as in Step 3
+of Algorithm 4 and of all primal feasibility conditions as in Step 7 of                                          NP
+Algorithm 4. As soon as one is violated, the algorithm moves to the
+next region in the list. This does reduce the computational time         #reals = m(n + nx + 1) +                         n|A(k)| + |A(k)|2 .                                (32)
+of each step. Secondly, Algorithm 3 works well even in presence
+of non-full-dimensional critical regions (in fact it does not require                                            k=1
+the list of neighboring regions). For these reasons, Algorithm 3 is
+very simple and practical even if it might perform very poorly on        The worst case number of operations are required when (i) the
+average.
+                                                                         state is contained in the last region and (ii) for every region only
+
+                                                                         the last constraint in the list is not satisfied. The total worst case
+
+                                                                         number of operation (see Borrelli et al., 2010 for details) is
+
+                                                                                                                          NP
+
+                                                                         m(nx + 1) + NP n(2m - 1) + 2 |A(k)|2.                                                               (33)
+
+                                                                                                                          k=1
+
+                                                                         In conclusion we can combine the results in (30) with (33) and
+
+6. Semi-explicit algorithm                                               state that Algorithm 5 is less computationally demanding than the
+
+                                                                         explicit Algorithm 3 if
+
+    By using the results of the previous section we can define                                                                      NP
+alternative algorithms which trade off memory and computational
+time in a different way compared to both active set QPs and              2nxNH > m(nx + 1) + NP n(2m - 1) + 2                              |A(k)        2  .                 (34)
+explicit solvers. Next we present an approach that, for a class of
+MPC problems, reduces both required memory and worst case                                                                                              |
+computational time compared to an explicit solver.
+                                                                                                                                    k=1
+   Without loss of generality we assume that g(x) = 0 (for QP
+                                                                         Also, combining (29) with (32) we obtain that Algorithm 5 saves
+deriving from MPC problems this can always be obtained by                memory compared to the explicit Algorithm 3 if
+a simple coordinate transformation (Bemporad et al., 2002)).
+                                                                         (nx + 1)NH + nuNP (nx + 1) > m(n + nx + 1)
+Consider Eqs. (12) and (13), and rewrite U(x) and (x) as
+                                                                                NP
+
+                                                                             +       n|A(k)|       +  |A(k)   2  .                                                           (35)
+
+                                                                                                             |
+
+U  = H-1GA(GAH-1GA)-1bA(x) =: T AbA(x)                            (31)            k=1
+
+ = -(GAH-1GA)-1bA(x) =: SAbA(x).                                         If in every region there are no redundant constraints (this is often
+
+                                                                         true when the number of parameters is large), then NH = mNP
+
+                                                                         and inequality (34) for large NP can be approximated with a simple
+                                                                         expression
+
+The main idea is to compute and store the matrices T A  Rn×|A|                                          2    NP                                                              (36)
+and SA  R|A|×|A| off-line for all optimal sets of active constraints
+A. Then, the on-line steps are: (1) compute b(x) = br + Bxx,             nxm > n(2m - 1) + NP                    |A(k)|2.
+verify duality conditions by computing  from (31), compute the
+                                                                                                             k=1
+optimizer candidate U by using (31) and verify primal feasibility
+                                                                         Note that (36) links the efficiency of the proposed algorithm
+conditions GU  b(x). We report implementation of this idea in
+                                                                         to the number of parameters nx, the number of optimization
+Algorithm 5.
+                                                                         variables n, the number of constraints m and the average number
+
+                                                                         of  squared  active       constraints         1       NP   |A(k)   2  .  Examples    showing
+                                                                                                                      NP       k=1
+                                                                                                                                           |
+
+Algorithm 5 Semi-explicit solution to QP (7)                             the effectiveness of the proposed approach, conclusions and future
+
+                                                                         research topic can be found in Borrelli et al. (2010).
+
+Input: x, br , Bx, T Ai , SAi , i = 1, . . . , NP , initial A =          References
+
+Output: U                                                                Baoti, M., Borrelli, F., Bemporad, A., & Morari, M. (2008). Efficient on-line
+                                                                              computation of constrained optimal control. SIAM Journal on Control and
+ 1: k  1, A(k)  A                                                             Optimization, 47, 2470­2489.
+ 2: b  br + Bxx
+                                                                         Bemporad, A., Morari, M., Dua, V., & Pistikopoulos, E. N. (2002). The explicit linear
+3: if b  0 then                                                               quadratic regulator for constrained systems. Automatica, 38, 3­20.
+
+4: return U   0                                                          Borrelli, F., Baotic, M., Pekar, J., & Stewart, G. (2010). On the complexity of explicit
+                                                                              MPC laws. UC Berkeley Technical report. Online at: www.mpc.berkeley.edu.
+5: end if
+                                                                         Ferreau, H. J., Bock, H. G., & Diehl, M. (2008). An online active set strategy to
+6: i  argminiSiA(k) bA(k)                                                     overcome the limitations of explicit MPC. International Journal of Robust and
+7: if SiA (k) bA(k) < 0 then                                                  Nonlinear Control, 18, 816­830.
+8: A(k+1)  A(k) \ A(k)(i)
+                                                                         Fletcher, R. (1987). Practical methods of optimization (second ed.). Wiley-
+ 9: else                                                                      Interscience Publication.
+
+10: z  T A(k) bA(k)                                                      Jones, C., Grieder, P., & Rakovi, S. (2005). A logarithmic-time solution to the
+11: j  argminjbj - Gjz(x)                                                     point location problem for closed-form linear MPC. In IFAC world congress. July.
+12: if Gj z > bj then                                                         Prague, Czech Republic.
+
+13:   A(k+1)  A(k)  j                                                    Mayne, D. Q., Rawlings, J. B., Rao, C. V., & Scokaert, P. O. M. (2000). Constrained model
+                                                                              predictive control: stability and optimality. Automatica, 36, 789­814.
+14: else
+                                                                         Milman, R., & Davison, E. J. (2008). A fast MPC algorithm using nonfeasible active set
+15:   return U  z                                                             methods. Journal of Optimization Theory and Applications. Published on-line.
+
+16: end if                                                               Santos, L. O., Afonso, P., Castro, J., Oliveira, N., & Biegler, L. T. (2001). On-
+                                                                              line implementation of nonlinear mpc: an experimental case study. Control
+17: end if                                                                    Engineering Practice, 9(8), 847­857.
+
+18: k  k + 1, goto 6                                                     Spjøtvold, J., Kerrigan, E. C., Jones, C. N., Tøndel, P., & Johansen, T. A. (2006). On the
+                                                                              facet-to-facet property of solutions to convex parametric quadratic programs.
+    It is clear that since we do not store the primal feasible                Automatica, 42, 2209­2214.
+polyhedron, Algorithm 5 might save memory compared to an
+explicit algorithm. To be precise, Algorithm 5 requires mn real          Tøndel, P., Johansen, T. A., & Bemporad, A. (2003). An algorithm for multipara-
+                                                                              metric quadratic programming and explicit MPC solutions. Automatica, 39,
+                                                                              489­497.
+
+                                                                         Wang, Y., & Boyd, S. (2008). Fast model predictive control using online optimization.
+                                                                              In Proceedings IFAC world congress (pp. 6974­6997). July. Seoul.
+F. Borrelli et al. / Automatica 46 (2010) 1035­1041                                            1041
+
+Zeilinger, M., Jones, C. N., & Morari, M. (2008). Real-time suboptimal model                                                     Jaroslav Pekar is a Research Engineer in Honeywell Prague
+     predictive control using a combination of explicit MPC and online optimization.                                             Laboratory (Honeywell ACS AT Laboratories). He has been
+     In Conference on decision and control, CDC 2008. December. Cancun, Mexico.                                                  with Honeywell since 2005. Jaroslav is working on R&D
+                                                                                                                                 projects focused on optimal and advanced control design
+                                  Francesco Borrelli received the `Laurea' degree in com-                                        for wide range of applications, e.g. fast sampled dynamical
+                                  puter science engineering in 1998 from the University of                                       systems, power generation, industrial energy, etc. He
+                                  Naples `Federico II', Italy. In 2002 he received the Ph.D.                                     holds Ph.D. degree in Control Engineering from the Faculty
+                                  from the Automatic Control Laboratory at ETH-Zurich,                                           of Electrical Engineering at the Czech Technical University
+                                  Switzerland. He is currently an Assistant Professor at the                                     in Prague.
+                                  Department of Mechanical Engineering of the University
+                                  of California at Berkeley, USA. He is the author of more                                       Greg Stewart received the B.Sc. degree in Physics in 1994
+                                  than fifty publications in the field of predictive control.                                    and the M.Sc. degree in Applied Mathematics in 1996 from
+                                  He is author of the book Constrained Optimal Control of                                        Dalhousie University in Halifax, and the Ph.D. degree from
+                                  Linear and Hybrid Systems published by Springer Verlag                                         the Department of Electrical and Computer Engineering at
+                                  and the winner of the 2009 NSF CAREER award. In 2008                                           the University of British Columbia in Vancouver, Canada in
+he was appointed the chair of the IEEE technical committee on automotive control.                                                2000.
+His research interests include constrained optimal control, model predictive control
+and its application to advanced automotive control and energy efficient building                                                      He currently holds the position of Fellow in Honeywell
+operation.                                                                                                                       Automation and Control Solutions and has held an Adjunct
+                                                                                                                                 Professor appointment in the Department of Electrical
+                                  Mato Baoti received the B.Sc. and M.Sc. degrees, both                                          and Computer Engineering at the University of British
+                                  in Electrical Engineering, from the Faculty of Electrical                                      Columbia since 2000. He was appointed Associate Editor
+                                  Engineering and Computing (FER Zagreb), University           for the IEEE Transactions on Control Systems Technology in 2005.
+                                  of Zagreb, Croatia, in 1997 and 2000, respectively.               His research interests are in the development and use of theory for industrial
+                                  As a recipient of the ESKAS scholarship of the Swiss         implementation of advanced control strategies. He holds 16 patents, has published
+                                  Government he was a visiting researcher at the Automatic     more than 50 technical publications, and his designs reside on over 200 industrial
+                                  Control Lab, Swiss Federal Institute of Technology (ETH)     installations.
+                                  Zurich, Switzerland, during the academic year 2000/2001.          Dr. Stewart has received the IEEE Control Systems Technology Award, the IEEE
+                                  In 2005 he received the Ph.D. from the ETH Zurich,           Transactions on Control Systems Technology Outstanding Paper Award, an NSERC
+                                  Switzerland. Currently he is Assistant Professor at the      University­Industry Synergy Award for Innovation, and four Honeywell Technical
+                                  Department of Control and Computer Engineering, FER          Achievement awards.
+Zagreb, Croatia. His research interests include mathematical programming, hybrid
+systems, optimal control and model predictive control.
+
