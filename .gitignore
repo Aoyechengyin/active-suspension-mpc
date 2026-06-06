@@ -18,10 +18,9 @@ replay_*.log
 *.diary
 scratch/
 
-# Large MATLAB data is ignored by default, with reproduction data allowed.
+# Large MATLAB data is ignored by default, with CarSim 2020 reproduction data allowed.
 *.mat
 !src_2020/*.mat
-!data/*.mat
 
 # Python
 __pycache__/
@@ -42,12 +41,39 @@ Thumbs.db
 
 # Local/sensitive agent settings
 .claude/settings.local.json
+.mcp.local.json
+
+# Local web/research extraction scratch files
+.firecrawl/
 
 # Third-party toolbox installs should be restored locally, not committed.
-tbxmanager/toolboxes/
+tbxmanager/
 
 # Heavy video exports
 Output/**/*.avi
 
-# Local CarSim export scratch file
-Carsim参数集/输出/Run_out.xlsx
+# Local CarSim and legacy experiment scratch files
+Carsim参数集/
+src/cpar/
+src/CarSim_Integration_Guide.m
+src/CarSim_IO_配置清单.md
+src/build_codegen_mat.m
+src/carsim_state_estimator.m
+src/per_corner_mpc.m
+src/road_profile_speedbump.xlsx
+src/simfile.sim
+src/untitled.slx
+
+# Local reference/library downloads; keep curated paper paths tracked explicitly if needed.
+papers/*.pdf
+papers/*.lnk
+
+# Generated document/report artifacts
+日志/*.docx
+日志/*.pdf
+日志/*.png
+讨论课/
+预瞄显式MPC_文献汇报最终版.pdf
+
+# Local variable-output scratch notes
+变量/结果输出.txt
