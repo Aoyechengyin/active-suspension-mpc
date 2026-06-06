@@ -1,0 +1,34 @@
+% CarSim 预瞄路面高程参数 (速度相关版本)
+% W1 = 10ms 后路面高程, W2 = 20ms 后路面高程
+% 距离 = Vxz_Fwd * dt_preview (随车速动态变化)
+
+DEFINE_OUTPUT W1_L1 = 0; m; L1 Wheel 0.01s Preview Height
+DEFINE_OUTPUT W2_L1 = 0; m; L1 Wheel 0.02s Preview Height
+DEFINE_OUTPUT W1_R1 = 0; m; R1 Wheel 0.01s Preview Height
+DEFINE_OUTPUT W2_R1 = 0; m; R1 Wheel 0.02s Preview Height
+
+DEFINE_OUTPUT W1_L2 = 0; m; L2 Wheel 0.01s Preview Height
+DEFINE_OUTPUT W2_L2 = 0; m; L2 Wheel 0.02s Preview Height
+DEFINE_OUTPUT W1_R2 = 0; m; R2 Wheel 0.01s Preview Height
+DEFINE_OUTPUT W2_R2 = 0; m; R2 Wheel 0.02s Preview Height
+
+EQ_OUT W1_L1 = road_z(X_L1 + Vxz_Fwd * 0.01, Y_L1);
+EQ_OUT W2_L1 = road_z(X_L1 + Vxz_Fwd * 0.02, Y_L1);
+
+EQ_OUT W1_R1 = road_z(X_R1 + Vxz_Fwd * 0.01, Y_R1);
+EQ_OUT W2_R1 = road_z(X_R1 + Vxz_Fwd * 0.02, Y_R1);
+
+EQ_OUT W1_L2 = road_z(X_L2 + Vxz_Fwd * 0.01, Y_L2);
+EQ_OUT W2_L2 = road_z(X_L2 + Vxz_Fwd * 0.02, Y_L2);
+
+EQ_OUT W1_R2 = road_z(X_R2 + Vxz_Fwd * 0.01, Y_R2);
+EQ_OUT W2_R2 = road_z(X_R2 + Vxz_Fwd * 0.02, Y_R2);
+
+EXPORT W1_L1
+EXPORT W1_R1
+EXPORT W1_L2
+EXPORT W1_R2
+EXPORT W2_L1
+EXPORT W2_R1
+EXPORT W2_L2
+EXPORT W2_R2

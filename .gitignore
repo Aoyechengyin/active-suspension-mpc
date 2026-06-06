@@ -1,14 +1,27 @@
-# MATLAB
+# MATLAB and Simulink generated files
 *.mex*
 *.slxc
 *.slx.autosave
 slprj/
+**/slprj/
+*_ert_rtw/
+untitled_ert_rtw/
 *.asv
 *.fig
 *.m~
+*.obj
+replay_*.log
 
-# Data files (large binary)
+# Generated logs and temporary outputs
+*.out
+*.log
+*.diary
+scratch/
+
+# Large MATLAB data is ignored by default, with reproduction data allowed.
 *.mat
+!src_2020/*.mat
+!data/*.mat
 
 # Python
 __pycache__/
@@ -17,7 +30,7 @@ __pycache__/
 .venv/
 env/
 
-# IDE
+# IDE and local tool settings
 .vscode/
 .idea/
 *.swp
@@ -27,7 +40,14 @@ env/
 Thumbs.db
 .DS_Store
 
-# Simulation outputs
-*.out
-*.log
-*.diary
+# Local/sensitive agent settings
+.claude/settings.local.json
+
+# Third-party toolbox installs should be restored locally, not committed.
+tbxmanager/toolboxes/
+
+# Heavy video exports
+Output/**/*.avi
+
+# Local CarSim export scratch file
+Carsim参数集/输出/Run_out.xlsx
