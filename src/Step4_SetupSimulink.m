@@ -15,7 +15,7 @@ fprintf('\n--- 运行纯 MATLAB QC 模型闭环仿真 ---\n');
 
 % 加载数据
 load('prediction_model.mat');
-load('regionless_mpc_data.mat');
+load('regionless_mpc_data_full.mat');
 
 % 仿真参数
 vx = 50 / 3.6;        % 50 km/h

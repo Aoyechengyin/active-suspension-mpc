@@ -69,11 +69,11 @@ for i = 1:n_samples
     % 识别最优活跃集
     residual = P * U_qp - (M1 + M2 * x_sample);
     Ai = find(abs(residual) < 1e-5)';
+    n_act = length(Ai);
     key = mat2str(Ai);
 
     if ~AS_map.isKey(key)
-        n_active = length(Ai);
-        if n_active > c
+        if n_act > c
             continue;
         end
 
@@ -83,12 +83,12 @@ for i = 1:n_samples
 
         % 计算 KKT 矩阵分解
         S = PAi * invH * PAi';
-        if n_active > 0 && rcond(S) < 1e-10
+        if n_act > 0 && rcond(S) < 1e-10
             continue;
         end
 
-        if n_active > 0
-            invS = S \ eye(n_active);
+        if n_act > 0
+            invS = S \ eye(n_act);
             Q_Ai = -invS * (M2Ai + PAi * invH_Ft);
             q_Ai = -invS * M1Ai;
         else
@@ -100,11 +100,7 @@ for i = 1:n_samples
         count = count + 1;
         AS_map(key) = true;
         active_sets{count} = struct(...
-            'A', Ai, ...
-            'Q', Q_Ai, ...
-            'q', q_Ai, ...
-            'PA', PAi, ...
-            'invS', invS);
+            'A', Ai, 'Q', Q_Ai, 'q', q_Ai, 'PA', PAi, 'invS', invS);
     end
 
     % 进度显示
@@ -117,17 +113,46 @@ elapsed_total = toc;
 fprintf('\n枚举完成! 耗时 %.1f 秒\n', elapsed_total);
 fprintf('找到 %d 个可行活跃集 (来自 %d 个采样点)\n', count, n_samples);
 
-%% 5. 保存离线数据
-% 将 cell array 转为 struct array 以便 codegen
+%% 5. 保存离线数据 (兼容 MATLAB 脚本)
 active_sets_array = [active_sets{:}];
 
+% === 为 Simulink Codegen 准备填充数组 ===
+% codegen 要求所有变量是纯数值数组, 不能有异构 struct array
+n_sets = count;
+max_active = c;  % 最大活跃约束数 ≤ c
+A_padded = -ones(max_active, n_sets);     % max_active × n_sets
+Q_padded = zeros(max_active, n_x, n_sets); % max_active × n_x × n_sets
+q_padded = zeros(max_active, 1, n_sets);   % max_active × 1 × n_sets
+n_active_arr = zeros(1, n_sets);
+
+for i = 1:n_sets
+    Ai = active_sets{i}.A;
+    n_act = length(Ai);
+    n_active_arr(i) = n_act;
+    if n_act > 0
+        A_padded(1:n_act, i) = Ai(:);
+        Q_padded(1:n_act, :, i) = active_sets{i}.Q;
+        q_padded(1:n_act, 1, i) = active_sets{i}.q;
+    end
+end
+
+% === 保存 codegen 兼容文件 (纯数值, 无 struct/cell) ===
 save('regionless_mpc_data.mat', ...
+     'invH', 'invH_Ft', 'P', 'M1', 'M2', ...
+     'H', 'c', 'm', 'n_x', 'n_u', 'u_max', ...
+     'x_bounds', 'dt', ...
+     'A_padded', 'Q_padded', 'q_padded', 'n_active_arr', ...
+     'n_sets', 'max_active');
+fprintf('Codegen-safe 数据已保存至 regionless_mpc_data.mat\n');
+
+% === 保存完整文件 (含 struct, 供 MATLAB 脚本使用) ===
+save('regionless_mpc_data_full.mat', ...
      'active_sets', 'active_sets_array', ...
      'invH', 'invH_Ft', 'F', 'P', 'M1', 'M2', ...
      'H', 'c', 'm', 'n_x', 'n_u', 'u_max', ...
-     'x_bounds', 'dt');
-
-fprintf('离线数据已保存至 regionless_mpc_data.mat\n');
+     'x_bounds', 'dt', ...
+     'n_sets', 'max_active');
+fprintf('完整数据已保存至 regionless_mpc_data_full.mat (%d 活跃集)\n', n_sets);
 
 %% 6. 离线验证: 与 quadprog 对比
 fprintf('\n========== 离线验证: 与 quadprog 对比 ==========\n');

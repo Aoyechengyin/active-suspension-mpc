@@ -4,7 +4,7 @@
 clear; clc;
 
 load('prediction_model.mat');
-load('regionless_mpc_data.mat');
+load('regionless_mpc_data_full.mat');
 
 % 短仿真: 只有一个凸块
 vx = 50 / 3.6;

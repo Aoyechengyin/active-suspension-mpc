@@ -1,0 +1,50 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 1,
+  "filesSkipped": [
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmexTest.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmexTHUNK.c",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glplpk.h",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.c",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.h",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.mexw64",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex_build.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex_demo.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex_info.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmexreadme.txt",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpmlicense.txt",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksparse.c",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksparse.h",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksparseTest.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksym.h",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkunion.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkversion.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/readme.txt",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/typeof.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/typeofTest.m",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/whatsnew.txt",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libglpk_4_52.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libstdc++-6.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_seh-1.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_sjlj-1.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_sjlblj-1.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_dw2-1.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgfortran-3.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libquadmath-0.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_seh-1.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libstdc++-6.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_dw2-1.dll",
+    "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgfortran-3.dll"
+  ],
+  "results": [
+    {
+      "path": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpk.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 509,
+      "nonEmptyLines": 491,
+      "metrics": {}
+    }
+  ]
+}

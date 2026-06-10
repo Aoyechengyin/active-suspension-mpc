@@ -1,0 +1,27 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'function:src_2020/config_2020.m:config_2020' has no edges (orphan)",
+    "Node 'concept:active-set' has no edges (orphan)",
+    "Node 'concept:road-preview' has no edges (orphan)",
+    "Node 'concept:kkt-conditions' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 43,
+    "totalEdges": 47,
+    "totalLayers": 4,
+    "tourSteps": 7,
+    "nodeTypes": {
+      "file": 31,
+      "function": 4,
+      "concept": 8
+    },
+    "edgeTypes": {
+      "depends_on": 7,
+      "calls": 2,
+      "implements": 4,
+      "configures": 3,
+      "contains": 31
+    }
+  }
+}

@@ -1,0 +1,303 @@
+{
+  "nodes": [
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpk.m",
+      "type": "file",
+      "name": "glpk.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpk.m",
+      "summary": "GLPK 库的 MATLAB MEX 接口封装，提供 LP/MILP 线性规划与混合整数线性规划求解功能，通过参数校验后委托 glpkcc MEX 函数执行实际求解。",
+      "tags": ["api-wrapper", "linear-programming", "third-party", "optimization", "mex-interface"],
+      "complexity": "moderate",
+      "languageNotes": "该文件约 500 行，其中约 350 行是详细的 API 文档注释，实际函数体约 150 行，包含完整的输入参数校验逻辑。调用底层 glpkcc MEX 函数完成求解。"
+    },
+    {
+      "id": "function:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpk.m:glpk",
+      "type": "function",
+      "name": "glpk",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpk.m",
+      "lineRange": [353, 509],
+      "summary": "GLPK 求解器的 MATLAB 入口函数，接收目标系数、约束矩阵、边界、约束类型、变量类型等参数，进行输入校验后调用 glpkcc MEX 函数求解 LP/MILP 问题，返回最优解、目标值、状态码和附加信息。",
+      "tags": ["optimization", "entry-point", "linear-programming", "input-validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.m",
+      "type": "file",
+      "name": "glpkmex.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.m",
+      "summary": "GLPKMEX 工具箱的备用/替代 MATLAB 接口文件，提供与 glpk.m 类似的 LP/MILP 求解功能（该文件在磁盘上未找到，可能为项目扫描器残留条目）。",
+      "tags": ["api-wrapper", "linear-programming", "third-party", "optimization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmexTest.m",
+      "type": "file",
+      "name": "glpkmexTest.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmexTest.m",
+      "summary": "GLPKMEX 工具箱的单元测试文件，验证 LP/MILP 求解器的基本功能和边界情况（该文件在磁盘上未找到）。",
+      "tags": ["test", "linear-programming", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmexTHUNK.c",
+      "type": "file",
+      "name": "glpkmexTHUNK.c",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmexTHUNK.c",
+      "summary": "GLPKMEX 的 MEX thunk 层 C 源码，负责在 MATLAB 和 GLPK C 库之间进行数据类型转换和函数调用桥接（该文件在磁盘上未找到）。",
+      "tags": ["mex-interface", "bridge", "third-party", "c-source"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glplpk.h",
+      "type": "file",
+      "name": "glplpk.h",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glplpk.h",
+      "summary": "GLPK 核心库的 C 头文件，定义 LP/MILP 求解器的数据结构和 API 接口（该文件在磁盘上未找到）。",
+      "tags": ["header", "api-definition", "third-party", "linear-programming"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.c",
+      "type": "file",
+      "name": "glpkmex.c",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.c",
+      "summary": "GLPKMEX 的主 MEX C 源码文件，实现 MATLAB 与 GLPK 库之间的 MEX 接口函数（该文件在磁盘上未找到）。",
+      "tags": ["mex-interface", "c-source", "third-party", "bridge"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.h",
+      "type": "file",
+      "name": "glpkmex.h",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.h",
+      "summary": "GLPKMEX MEX 接口的 C 头文件，声明 MEX 函数原型（该文件在磁盘上未找到）。",
+      "tags": ["header", "mex-interface", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.mexw64",
+      "type": "file",
+      "name": "glpkmex.mexw64",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex.mexw64",
+      "summary": "GLPKMEX 的预编译 Windows 64 位 MEX 二进制文件（该文件在磁盘上未找到，实际目录中存在 glpkcc.mexw64）。",
+      "tags": ["binary", "mex-binary", "third-party", "compiled"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex_build.m",
+      "type": "file",
+      "name": "glpkmex_build.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex_build.m",
+      "summary": "GLPKMEX 的构建脚本，用于从 C 源码编译 MEX 文件（该文件在磁盘上未找到）。",
+      "tags": ["build-script", "compilation", "third-party", "mex-interface"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex_demo.m",
+      "type": "file",
+      "name": "glpkmex_demo.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex_demo.m",
+      "summary": "GLPKMEX 的示例脚本，演示如何使用 glpk 函数求解 LP/MILP 问题（该文件在磁盘上未找到）。",
+      "tags": ["demo", "example", "third-party", "linear-programming"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex_info.m",
+      "type": "file",
+      "name": "glpkmex_info.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmex_info.m",
+      "summary": "GLPKMEX 工具箱的信息文件，包含版本号和版权信息（该文件在磁盘上未找到）。",
+      "tags": ["info", "metadata", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmexreadme.txt",
+      "type": "document",
+      "name": "glpkmexreadme.txt",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkmexreadme.txt",
+      "summary": "GLPKMEX 工具箱的英文自述文件，包含安装说明和使用指南（该文件在磁盘上未找到）。",
+      "tags": ["documentation", "readme", "third-party", "installation-guide"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpmlicense.txt",
+      "type": "document",
+      "name": "glpmlicense.txt",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpmlicense.txt",
+      "summary": "GLPK 库的 GNU GPL 许可证文件，定义开源使用条款（该文件在磁盘上未找到）。",
+      "tags": ["documentation", "license", "third-party", "gpl"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksparse.c",
+      "type": "file",
+      "name": "glpksparse.c",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksparse.c",
+      "summary": "GLPK 稀疏矩阵支持的 C 源码文件，提供稀疏约束矩阵的处理功能（该文件在磁盘上未找到）。",
+      "tags": ["c-source", "sparse-matrix", "third-party", "linear-algebra"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksparse.h",
+      "type": "file",
+      "name": "glpksparse.h",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksparse.h",
+      "summary": "GLPK 稀疏矩阵模块的 C 头文件，声明稀疏矩阵操作接口（该文件在磁盘上未找到）。",
+      "tags": ["header", "sparse-matrix", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksparseTest.m",
+      "type": "file",
+      "name": "glpksparseTest.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksparseTest.m",
+      "summary": "GLPK 稀疏矩阵接口的 MATLAB 测试文件，验证稀疏矩阵 LP 求解功能（该文件在磁盘上未找到）。",
+      "tags": ["test", "sparse-matrix", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksym.h",
+      "type": "file",
+      "name": "glpksym.h",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpksym.h",
+      "summary": "GLPK 符号常量定义的 C 头文件，包含求解器状态码和参数常量（该文件在磁盘上未找到）。",
+      "tags": ["header", "constants", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkunion.m",
+      "type": "file",
+      "name": "glpkunion.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkunion.m",
+      "summary": "GLPKMEX 的集合运算辅助函数，可能用于处理可行域的并集操作（该文件在磁盘上未找到）。",
+      "tags": ["utility", "set-operation", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkversion.m",
+      "type": "file",
+      "name": "glpkversion.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpkversion.m",
+      "summary": "返回 GLPK 库和 GLPKMEX 接口版本信息的辅助函数（该文件在磁盘上未找到）。",
+      "tags": ["utility", "version-info", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/readme.txt",
+      "type": "document",
+      "name": "readme.txt",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/readme.txt",
+      "summary": "GLPKMEX 工具箱的自述文件副本，包含安装和使用说明（该文件在磁盘上未找到）。",
+      "tags": ["documentation", "readme", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/typeof.m",
+      "type": "file",
+      "name": "typeof.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/typeof.m",
+      "summary": "GLPKMEX 的类型检测辅助函数，用于确定 MATLAB 变量的底层数据类型（该文件在磁盘上未找到）。",
+      "tags": ["utility", "type-inspection", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/typeofTest.m",
+      "type": "file",
+      "name": "typeofTest.m",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/typeofTest.m",
+      "summary": "typeof 函数的单元测试文件（该文件在磁盘上未找到）。",
+      "tags": ["test", "type-inspection", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/whatsnew.txt",
+      "type": "document",
+      "name": "whatsnew.txt",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/whatsnew.txt",
+      "summary": "GLPKMEX 工具箱的版本更新日志，记录各版本的变更内容（该文件在磁盘上未找到）。",
+      "tags": ["documentation", "changelog", "third-party"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libglpk_4_52.dll",
+      "type": "file",
+      "name": "libglpk_4_52.dll",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libglpk_4_52.dll",
+      "summary": "GLPK 4.52 版本的 Windows 64 位动态链接库，包含 LP/MILP 求解器的核心实现（该文件在磁盘上未找到）。",
+      "tags": ["binary", "shared-library", "third-party", "linear-programming"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libstdc++-6.dll",
+      "type": "file",
+      "name": "libstdc++-6.dll",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libstdc++-6.dll",
+      "summary": "GCC C++ 标准库运行时 DLL，GLPKMEX 编译依赖（该文件在磁盘上未找到）。",
+      "tags": ["binary", "shared-library", "third-party", "runtime-dependency"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_seh-1.dll",
+      "type": "file",
+      "name": "libgcc_s_seh-1.dll",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_seh-1.dll",
+      "summary": "GCC 运行时支持库（SEH 异常处理），Windows 64 位编译依赖（该文件在磁盘上未找到）。",
+      "tags": ["binary", "shared-library", "third-party", "runtime-dependency"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_sjlj-1.dll",
+      "type": "file",
+      "name": "libgcc_s_sjlj-1.dll",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_sjlj-1.dll",
+      "summary": "GCC 运行时支持库（SJLJ 异常处理），兼容性编译依赖（该文件在磁盘上未找到）。",
+      "tags": ["binary", "shared-library", "third-party", "runtime-dependency"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_sjlblj-1.dll",
+      "type": "file",
+      "name": "libgcc_s_sjlblj-1.dll",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_sjlblj-1.dll",
+      "summary": "GCC 运行时支持库变体（SJLJ 异常处理），兼容性编译依赖（该文件在磁盘上未找到）。",
+      "tags": ["binary", "shared-library", "third-party", "runtime-dependency"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_dw2-1.dll",
+      "type": "file",
+      "name": "libgcc_s_dw2-1.dll",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgcc_s_dw2-1.dll",
+      "summary": "GCC 运行时支持库（DWARF2 异常处理），兼容性编译依赖（该文件在磁盘上未找到）。",
+      "tags": ["binary", "shared-library", "third-party", "runtime-dependency"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgfortran-3.dll",
+      "type": "file",
+      "name": "libgfortran-3.dll",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libgfortran-3.dll",
+      "summary": "GCC Fortran 运行时库，GLPK 内部 Fortran 子程序的编译依赖（该文件在磁盘上未找到）。",
+      "tags": ["binary", "shared-library", "third-party", "runtime-dependency"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libquadmath-0.dll",
+      "type": "file",
+      "name": "libquadmath-0.dll",
+      "filePath": "tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/win64/libquadmath-0.dll",
+      "summary": "GCC 四精度数学库运行时 DLL，提供 128 位浮点运算支持（该文件在磁盘上未找到）。",
+      "tags": ["binary", "shared-library", "third-party", "runtime-dependency"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpk.m",
+      "target": "function:tbxmanager/toolboxes/glpkmex/1.0/pcwin64/glpkmex_1_0_pcwin64/glpkmex_1_0_pcwin64/glpk.m:glpk",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ]
+}

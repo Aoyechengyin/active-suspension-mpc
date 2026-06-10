@@ -1,0 +1,287 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 35,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/compatibility/utils/mpt_getFullRankSubset.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 159,
+      "nonEmptyLines": 152,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/geometry/unions/@PolyUnion/isOverlapping.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 61,
+      "nonEmptyLines": 52,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_PWApenalty.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 151,
+      "nonEmptyLines": 122,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_previous.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 83,
+      "nonEmptyLines": 68,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_reference.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 139,
+      "nonEmptyLines": 118,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/abs.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 80,
+      "nonEmptyLines": 74,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/atan2.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 7,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/blkdiag.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 74,
+      "nonEmptyLines": 63,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/brutepersp.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 7,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/ceil.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 36,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clear_poly_dep.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 10,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearconic.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 2,
+      "nonEmptyLines": 2,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearconicinfo.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 2,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearcreationtime.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 2,
+      "nonEmptyLines": 2,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearsdpvar.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 8,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/colamd.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 16,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/deepdepends.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 28,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/degreduce.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 19,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/degree.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 109,
+      "nonEmptyLines": 101,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/depends.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 27,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/display.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 218,
+      "nonEmptyLines": 197,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/eig.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 17,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/eliminateBinary.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 18,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/end.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 13,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/expanded.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 11,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/exponents.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/find.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 52,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/fix.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 41,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/floor.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 30,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getbase.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 3,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getbasematrixwithoutcheck.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 3,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getsosrank.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 6,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getvariables.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 39,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/hankel.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 22,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/harmmean.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 56,
+      "nonEmptyLines": 45,
+      "metrics": {}
+    }
+  ]
+}

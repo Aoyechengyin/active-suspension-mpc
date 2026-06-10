@@ -1,0 +1,287 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 35,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/utils/mpt_yalmip2mpt.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 73,
+      "nonEmptyLines": 66,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/accumarray.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/cumsum.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 20,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/isinteger.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 4,
+      "nonEmptyLines": 3,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/sign.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 38,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/symamd.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 16,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@constraint/nnz.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 94,
+      "nonEmptyLines": 90,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@lmi/lmi2sdpvar.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 27,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@optimizer/fiordos.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 69,
+      "nonEmptyLines": 62,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/RecoverNonlinearSolverSolution.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 10,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/addExponentialCone.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 213,
+      "nonEmptyLines": 208,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/addStructureBounds.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 26,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/anyCones.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 2,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/append_normalized_socp.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 41,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/apply_recursive_differentiation.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 169,
+      "nonEmptyLines": 161,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/apply_recursive_evaluation.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 98,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/build_recursive_scheme.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 115,
+      "nonEmptyLines": 102,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/checkfeasiblefast.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 74,
+      "nonEmptyLines": 66,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/compressLifted.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 62,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/compress_evaluation_scheme.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 50,
+      "nonEmptyLines": 48,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/convert_perspective_log.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 143,
+      "nonEmptyLines": 132,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/createOutputStructure.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 22,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/create_trivial_initial.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 15,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/createsdplibfile.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 56,
+      "nonEmptyLines": 47,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/eliminatevariables.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 380,
+      "nonEmptyLines": 345,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/endOfLPCone.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 2,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/extractSemiContBounds.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 11,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/find_lp_bounds.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 69,
+      "nonEmptyLines": 64,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/find_variable_bounds.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 34,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/fiordos_call.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 5,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/fmincon_con.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 513,
+      "nonEmptyLines": 483,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/fmincon_con_liftlayer.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 19,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/fmincon_congp.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 25,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/fmincon_fun.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 98,
+      "nonEmptyLines": 88,
+      "metrics": {}
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/fmincon_fun_liftlayer.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 16,
+      "metrics": {}
+    }
+  ]
+}

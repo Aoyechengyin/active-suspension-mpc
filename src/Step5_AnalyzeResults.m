@@ -11,7 +11,7 @@ fprintf('========== Step 5: 结果分析 ==========\n');
 
 % 加载模型和控制器数据
 load('prediction_model.mat');
-load('regionless_mpc_data.mat');
+load('regionless_mpc_data_full.mat');
 
 % 仿真工况
 vx = 50 / 3.6;        % 车速 50 km/h -> m/s

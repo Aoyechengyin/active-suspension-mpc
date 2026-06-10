@@ -1,0 +1,44 @@
+# .understandignore — patterns for files/dirs to exclude from analysis
+# Syntax: same as .gitignore (globs, # comments, ! negation, trailing / for dirs)
+# Lines below are suggestions — uncomment to activate.
+# Use ! prefix to force-include something excluded by defaults.
+#
+# Built-in defaults (always excluded unless negated):
+#   node_modules/, .git/, dist/, build/, obj/, *.lock, *.min.js, etc.
+#
+
+# --- From .gitignore (uncomment to exclude) ---
+# *.mex*
+# *.slxc
+# *.slx.autosave
+# slprj/
+# **/slprj/
+# *_ert_rtw/
+# untitled_ert_rtw/
+# *.asv
+# *.fig
+# *.m~
+# *.obj
+# replay_*.log
+# *.out
+# *.log
+# *.diary
+# scratch/
+# *.mat
+# !src_2020/*.mat
+# __pycache__/
+# *.pyc
+# *.pyo
+# .venv/
+# env/
+
+# --- Detected directories (uncomment to exclude) ---
+# tbxmanager/
+# slprj/
+# scratch/
+# Output/
+
+# --- Test file patterns (uncomment to exclude) ---
+# *.test.*
+# *.spec.*
+# *.snap

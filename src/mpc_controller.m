@@ -63,7 +63,7 @@ U_base = -invH_Ft * x;
 P_U_base = P * U_base;
 feasible = true;
 for j = 1:size(P, 1)
-    if P_U_base(j) > b(j) + 1e-8
+    if P_U_base(j) > b(j) + 1e-6
         feasible = false;
         break;
     end
@@ -92,7 +92,7 @@ for i = 1:n_sets
     lambda = Q_i * x + q_i;
     dual_feasible = true;
     for k = 1:n_active
-        if lambda(k) < -1e-8
+        if lambda(k) < -1e-6
             dual_feasible = false;
             break;
         end
@@ -111,7 +111,7 @@ for i = 1:n_sets
         for k = 1:c_dim
             Pj_U = Pj_U + P(j, k) * U_candidate(k);
         end
-        if Pj_U > b(j) + 1e-8
+        if Pj_U > b(j) + 1e-6
             primal_feasible = false;
             break;
         end

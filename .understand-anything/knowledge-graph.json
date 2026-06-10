@@ -1,0 +1,937 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "Regionless e-MPC for Active Suspension",
+    "languages": [
+      "matlab",
+      "simulink",
+      "markdown"
+    ],
+    "frameworks": [
+      "simulink",
+      "carsim"
+    ],
+    "description": "MATLAB实现的无区域显式模型预测控制（e-MPC）系统，用于主动悬架的道路预瞄控制",
+    "analyzedAt": "2026-06-06T16:12:21.647Z",
+    "gitCommitHash": "c403e65d0ed75fa2cf1bc7a1439f879ec9e07c6e"
+  },
+  "nodes": [
+    {
+      "id": "file:src/Step1_BuildPredictionModel.m",
+      "type": "file",
+      "name": "Step1 BuildPredictionModel",
+      "filePath": "src/Step1_BuildPredictionModel.m",
+      "summary": "构建四分之一车预测模型，定义物理参数并离散化状态空间",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/Step2_BuildMPCmatrices.m",
+      "type": "file",
+      "name": "Step2 BuildMPCmatrices",
+      "filePath": "src/Step2_BuildMPCmatrices.m",
+      "summary": "构建MPC的QP优化矩阵，包括预测矩阵和代价矩阵",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/Step3_RegionlessSolver.m",
+      "type": "file",
+      "name": "Step3 RegionlessSolver",
+      "filePath": "src/Step3_RegionlessSolver.m",
+      "summary": "枚举所有最优活跃集，计算KKT矩阵分解用于在线评估",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/Step4_SetupSimulink.m",
+      "type": "file",
+      "name": "Step4 SetupSimulink",
+      "filePath": "src/Step4_SetupSimulink.m",
+      "summary": "配置Simulink仿真环境，运行闭环测试",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/Step5_AnalyzeResults.m",
+      "type": "file",
+      "name": "Step5 AnalyzeResults",
+      "filePath": "src/Step5_AnalyzeResults.m",
+      "summary": "分析仿真结果，生成性能对比图表",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/regionless_mpc_eval.m",
+      "type": "file",
+      "name": "regionless mpc eval",
+      "filePath": "src/regionless_mpc_eval.m",
+      "summary": "核心在线算法：评估预枚举的活跃集，返回最优控制输入",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/mpc_controller.m",
+      "type": "file",
+      "name": "mpc controller",
+      "filePath": "src/mpc_controller.m",
+      "summary": "Simulink S-Function控制器接口",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/road_profile_generator.m",
+      "type": "file",
+      "name": "road profile generator",
+      "filePath": "src/road_profile_generator.m",
+      "summary": "生成测试用道路轮廓",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/enumerate_active_sets_sampling.m",
+      "type": "file",
+      "name": "enumerate active sets sampling",
+      "filePath": "src/enumerate_active_sets_sampling.m",
+      "summary": "采样法枚举活跃集",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/diagnose_preview.m",
+      "type": "file",
+      "name": "diagnose preview",
+      "filePath": "src/diagnose_preview.m",
+      "summary": "预瞄功能诊断工具",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/per_corner_mpc.m",
+      "type": "file",
+      "name": "per corner mpc",
+      "filePath": "src/per_corner_mpc.m",
+      "summary": "单轮MPC控制器封装",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/startup.m",
+      "type": "file",
+      "name": "startup",
+      "filePath": "src/startup.m",
+      "summary": "MATLAB路径初始化脚本",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/Step1_BuildPredictionModel_2020.m",
+      "type": "file",
+      "name": "Step1 BuildPredictionModel 2020",
+      "filePath": "src_2020/Step1_BuildPredictionModel_2020.m",
+      "summary": "CarSim 2020版本：构建前后轴独立的预测模型",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/Step2_BuildMPCmatrices_2020.m",
+      "type": "file",
+      "name": "Step2 BuildMPCmatrices 2020",
+      "filePath": "src_2020/Step2_BuildMPCmatrices_2020.m",
+      "summary": "CarSim 2020版本：构建四轮独立的QP矩阵",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/Step3_RegionlessSolver_2020.m",
+      "type": "file",
+      "name": "Step3 RegionlessSolver 2020",
+      "filePath": "src_2020/Step3_RegionlessSolver_2020.m",
+      "summary": "CarSim 2020版本：枚举活跃集并验证",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/Step4_CheckSimulink_2020.m",
+      "type": "file",
+      "name": "Step4 CheckSimulink 2020",
+      "filePath": "src_2020/Step4_CheckSimulink_2020.m",
+      "summary": "CarSim 2020版本：Simulink模型检查和更新",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/config_2020.m",
+      "type": "file",
+      "name": "config 2020",
+      "filePath": "src_2020/config_2020.m",
+      "summary": "中央参数配置：车辆几何、悬架参数、MPC参数、权重",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/empc_calibration_settings_2020.m",
+      "type": "file",
+      "name": "empc calibration settings 2020",
+      "filePath": "src_2020/empc_calibration_settings_2020.m",
+      "summary": "标定模式管理： FULL_CURRENT, B1_FRONT_ONLY等",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/per_corner_mpc_state_step_2020.m",
+      "type": "file",
+      "name": "per corner mpc state step 2020",
+      "filePath": "src_2020/per_corner_mpc_state_step_2020.m",
+      "summary": "单步状态估计和MPC计算",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/regionless_mpc_eval_2020.m",
+      "type": "file",
+      "name": "regionless mpc eval 2020",
+      "filePath": "src_2020/regionless_mpc_eval_2020.m",
+      "summary": "CarSim 2020版本的在线活跃集评估",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/per_corner_mpc_L1_2020.m",
+      "type": "file",
+      "name": "per corner mpc L1 2020",
+      "filePath": "src_2020/per_corner_mpc_L1_2020.m",
+      "summary": "左前轮MPC控制器",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/per_corner_mpc_L2_2020.m",
+      "type": "file",
+      "name": "per corner mpc L2 2020",
+      "filePath": "src_2020/per_corner_mpc_L2_2020.m",
+      "summary": "左后轮MPC控制器",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/per_corner_mpc_R1_2020.m",
+      "type": "file",
+      "name": "per corner mpc R1 2020",
+      "filePath": "src_2020/per_corner_mpc_R1_2020.m",
+      "summary": "右前轮MPC控制器",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/per_corner_mpc_R2_2020.m",
+      "type": "file",
+      "name": "per corner mpc R2 2020",
+      "filePath": "src_2020/per_corner_mpc_R2_2020.m",
+      "summary": "右后轮MPC控制器",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/self_check_2020.m",
+      "type": "file",
+      "name": "self check 2020",
+      "filePath": "src_2020/self_check_2020.m",
+      "summary": "系统自检脚本",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/rear_diff_limiter_2020.m",
+      "type": "file",
+      "name": "rear diff limiter 2020",
+      "filePath": "src_2020/rear_diff_limiter_2020.m",
+      "summary": "后轴差速限制器",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/road3_rho5_offline/TrainRoad3Rho5Offline_2020.m",
+      "type": "file",
+      "name": "TrainRoad3Rho5Offline 2020",
+      "filePath": "src_2020/road3_rho5_offline/TrainRoad3Rho5Offline_2020.m",
+      "summary": "离线训练不同rho5权重的活跃集",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/road3_rho5_offline/ActivateRoad3Rho5Profile_2020.m",
+      "type": "file",
+      "name": "ActivateRoad3Rho5Profile 2020",
+      "filePath": "src_2020/road3_rho5_offline/ActivateRoad3Rho5Profile_2020.m",
+      "summary": "激活特定rho5配置文件",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/road3_rho5_offline/RestoreRoad3Rho5Backup_2020.m",
+      "type": "file",
+      "name": "RestoreRoad3Rho5Backup 2020",
+      "filePath": "src_2020/road3_rho5_offline/RestoreRoad3Rho5Backup_2020.m",
+      "summary": "恢复rho5配置备份",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/road3_rho5_offline/Road3Rho5Config_2020.m",
+      "type": "file",
+      "name": "Road3Rho5Config 2020",
+      "filePath": "src_2020/road3_rho5_offline/Road3Rho5Config_2020.m",
+      "summary": "rho5配置参数",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src_2020/road3_rho5_offline/Road3Rho5Profiles_2020.m",
+      "type": "file",
+      "name": "Road3Rho5Profiles 2020",
+      "filePath": "src_2020/road3_rho5_offline/Road3Rho5Profiles_2020.m",
+      "summary": "rho5配置文件定义",
+      "tags": [
+        "matlab",
+        "source-code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/regionless_mpc_eval.m:regionless_mpc_eval",
+      "type": "function",
+      "name": "regionless_mpc_eval",
+      "filePath": "src/regionless_mpc_eval.m",
+      "summary": "在线活跃集评估算法，实现Algorithm 5",
+      "tags": [
+        "matlab",
+        "function"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src_2020/regionless_mpc_eval_2020.m:regionless_mpc_eval_2020",
+      "type": "function",
+      "name": "regionless_mpc_eval_2020",
+      "filePath": "src_2020/regionless_mpc_eval_2020.m",
+      "summary": "CarSim 2020版本的在线评估，增加目标函数比较",
+      "tags": [
+        "matlab",
+        "function"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src_2020/config_2020.m:config_2020",
+      "type": "function",
+      "name": "config_2020",
+      "filePath": "src_2020/config_2020.m",
+      "summary": "返回包含所有系统参数的结构体",
+      "tags": [
+        "matlab",
+        "function"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src_2020/empc_calibration_settings_2020.m:empc_calibration_settings_2020",
+      "type": "function",
+      "name": "empc_calibration_settings_2020",
+      "filePath": "src_2020/empc_calibration_settings_2020.m",
+      "summary": "管理标定模式配置",
+      "tags": [
+        "matlab",
+        "function"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "concept:regionless-mpc",
+      "type": "concept",
+      "name": "Regionless MPC",
+      "summary": "无区域显式模型预测控制，离线枚举所有最优活跃集",
+      "tags": [
+        "concept",
+        "control-theory"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "concept:active-set",
+      "type": "concept",
+      "name": "Active Set",
+      "summary": "活跃集，优化问题中紧约束的集合",
+      "tags": [
+        "concept",
+        "control-theory"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "concept:road-preview",
+      "type": "concept",
+      "name": "Road Preview",
+      "summary": "道路预瞄，使用未来道路信息改善控制",
+      "tags": [
+        "concept",
+        "control-theory"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "concept:quarter-car-model",
+      "type": "concept",
+      "name": "Quarter-Car Model",
+      "summary": "四分之一车模型，单轮悬架动力学",
+      "tags": [
+        "concept",
+        "control-theory"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "concept:kkt-conditions",
+      "type": "concept",
+      "name": "KKT Conditions",
+      "summary": "Karush-Kuhn-Tucker条件，优化问题的最优性条件",
+      "tags": [
+        "concept",
+        "control-theory"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "concept:src",
+      "type": "concept",
+      "name": "src",
+      "summary": "src 目录",
+      "tags": [
+        "directory"
+      ]
+    },
+    {
+      "id": "concept:src_2020",
+      "type": "concept",
+      "name": "src_2020",
+      "summary": "src_2020 目录",
+      "tags": [
+        "directory"
+      ]
+    },
+    {
+      "id": "concept:src_2020-road3_rho5_offline",
+      "type": "concept",
+      "name": "src_2020/road3_rho5_offline",
+      "summary": "src_2020/road3_rho5_offline 目录",
+      "tags": [
+        "directory"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/Step2_BuildMPCmatrices.m",
+      "target": "file:src/Step1_BuildPredictionModel.m",
+      "type": "depends_on",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/Step3_RegionlessSolver.m",
+      "target": "file:src/Step2_BuildMPCmatrices.m",
+      "type": "depends_on",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/Step4_SetupSimulink.m",
+      "target": "file:src/Step3_RegionlessSolver.m",
+      "type": "depends_on",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/Step5_AnalyzeResults.m",
+      "target": "file:src/Step4_SetupSimulink.m",
+      "type": "depends_on",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src_2020/Step2_BuildMPCmatrices_2020.m",
+      "target": "file:src_2020/Step1_BuildPredictionModel_2020.m",
+      "type": "depends_on",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src_2020/Step3_RegionlessSolver_2020.m",
+      "target": "file:src_2020/Step2_BuildMPCmatrices_2020.m",
+      "type": "depends_on",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src_2020/Step4_CheckSimulink_2020.m",
+      "target": "file:src_2020/Step3_RegionlessSolver_2020.m",
+      "type": "depends_on",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/mpc_controller.m",
+      "target": "function:src/regionless_mpc_eval.m:regionless_mpc_eval",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src_2020/per_corner_mpc_state_step_2020.m",
+      "target": "function:src_2020/regionless_mpc_eval_2020.m:regionless_mpc_eval_2020",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/regionless_mpc_eval.m:regionless_mpc_eval",
+      "target": "concept:regionless-mpc",
+      "type": "implements",
+      "weight": 0.9
+    },
+    {
+      "source": "function:src_2020/regionless_mpc_eval_2020.m:regionless_mpc_eval_2020",
+      "target": "concept:regionless-mpc",
+      "type": "implements",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/Step1_BuildPredictionModel.m",
+      "target": "concept:quarter-car-model",
+      "type": "implements",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src_2020/Step1_BuildPredictionModel_2020.m",
+      "target": "concept:quarter-car-model",
+      "type": "implements",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src_2020/config_2020.m",
+      "target": "file:src_2020/Step1_BuildPredictionModel_2020.m",
+      "type": "configures",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src_2020/config_2020.m",
+      "target": "file:src_2020/Step3_RegionlessSolver_2020.m",
+      "type": "configures",
+      "weight": 0.6
+    },
+    {
+      "source": "function:src_2020/empc_calibration_settings_2020.m:empc_calibration_settings_2020",
+      "target": "file:src_2020/per_corner_mpc_state_step_2020.m",
+      "type": "configures",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Step1_BuildPredictionModel.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/Step2_BuildMPCmatrices.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/Step3_RegionlessSolver.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/Step4_SetupSimulink.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/Step5_AnalyzeResults.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/regionless_mpc_eval.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/mpc_controller.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/road_profile_generator.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/enumerate_active_sets_sampling.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/diagnose_preview.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/per_corner_mpc.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src/startup.m",
+      "target": "concept:src",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/Step1_BuildPredictionModel_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/Step2_BuildMPCmatrices_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/Step3_RegionlessSolver_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/Step4_CheckSimulink_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/config_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/empc_calibration_settings_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/per_corner_mpc_state_step_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/regionless_mpc_eval_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/per_corner_mpc_L1_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/per_corner_mpc_L2_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/per_corner_mpc_R1_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/per_corner_mpc_R2_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/self_check_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/rear_diff_limiter_2020.m",
+      "target": "concept:src_2020",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/road3_rho5_offline/TrainRoad3Rho5Offline_2020.m",
+      "target": "concept:src_2020-road3_rho5_offline",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/road3_rho5_offline/ActivateRoad3Rho5Profile_2020.m",
+      "target": "concept:src_2020-road3_rho5_offline",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/road3_rho5_offline/RestoreRoad3Rho5Backup_2020.m",
+      "target": "concept:src_2020-road3_rho5_offline",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/road3_rho5_offline/Road3Rho5Config_2020.m",
+      "target": "concept:src_2020-road3_rho5_offline",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:src_2020/road3_rho5_offline/Road3Rho5Profiles_2020.m",
+      "target": "concept:src_2020-road3_rho5_offline",
+      "type": "contains",
+      "weight": 1
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:src",
+      "name": "核心源代码 (src/)",
+      "description": "原始1/4车模型实现，包含5步离线流程和在线评估算法",
+      "nodeIds": [
+        "file:src/Step1_BuildPredictionModel.m",
+        "file:src/Step2_BuildMPCmatrices.m",
+        "file:src/Step3_RegionlessSolver.m",
+        "file:src/Step4_SetupSimulink.m",
+        "file:src/Step5_AnalyzeResults.m",
+        "file:src/regionless_mpc_eval.m",
+        "file:src/mpc_controller.m",
+        "file:src/road_profile_generator.m",
+        "file:src/enumerate_active_sets_sampling.m",
+        "file:src/diagnose_preview.m",
+        "file:src/per_corner_mpc.m",
+        "file:src/startup.m"
+      ]
+    },
+    {
+      "id": "layer:src2020",
+      "name": "CarSim 2020 实现 (src_2020/)",
+      "description": "四轮独立控制器实现，支持CarSim联合仿真",
+      "nodeIds": [
+        "file:src_2020/Step1_BuildPredictionModel_2020.m",
+        "file:src_2020/Step2_BuildMPCmatrices_2020.m",
+        "file:src_2020/Step3_RegionlessSolver_2020.m",
+        "file:src_2020/Step4_CheckSimulink_2020.m",
+        "file:src_2020/config_2020.m",
+        "file:src_2020/empc_calibration_settings_2020.m",
+        "file:src_2020/per_corner_mpc_state_step_2020.m",
+        "file:src_2020/regionless_mpc_eval_2020.m",
+        "file:src_2020/per_corner_mpc_L1_2020.m",
+        "file:src_2020/per_corner_mpc_L2_2020.m",
+        "file:src_2020/per_corner_mpc_R1_2020.m",
+        "file:src_2020/per_corner_mpc_R2_2020.m",
+        "file:src_2020/self_check_2020.m",
+        "file:src_2020/rear_diff_limiter_2020.m"
+      ]
+    },
+    {
+      "id": "layer:rho5-offline",
+      "name": "Rho5离线调参 (src_2020/road3_rho5_offline/)",
+      "description": "rho5权重离线训练和配置管理",
+      "nodeIds": [
+        "file:src_2020/road3_rho5_offline/TrainRoad3Rho5Offline_2020.m",
+        "file:src_2020/road3_rho5_offline/ActivateRoad3Rho5Profile_2020.m",
+        "file:src_2020/road3_rho5_offline/RestoreRoad3Rho5Backup_2020.m",
+        "file:src_2020/road3_rho5_offline/Road3Rho5Config_2020.m",
+        "file:src_2020/road3_rho5_offline/Road3Rho5Profiles_2020.m"
+      ]
+    },
+    {
+      "id": "layer:concepts",
+      "name": "核心概念",
+      "description": "MPC控制理论和车辆动力学概念",
+      "nodeIds": [
+        "concept:regionless-mpc",
+        "concept:active-set",
+        "concept:road-preview",
+        "concept:quarter-car-model",
+        "concept:kkt-conditions"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "项目概述",
+      "description": "这是一个MATLAB/Simulink实现的无区域显式模型预测控制（e-MPC）系统，用于主动悬架的道路预瞄控制。核心思想是离线枚举所有最优活跃集，运行时只需函数评估，适合实时嵌入式实现。",
+      "nodeIds": [
+        "file:src/Step1_BuildPredictionModel.m",
+        "concept:regionless-mpc"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "预测模型构建",
+      "description": "Step1_BuildPredictionModel.m 定义四分之一车物理参数（簧载质量、非簧载质量、刚度、阻尼），构建连续时间状态空间模型，添加道路预瞄移位寄存器，离散化为26维增广状态系统。",
+      "nodeIds": [
+        "file:src/Step1_BuildPredictionModel.m",
+        "concept:quarter-car-model"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "MPC矩阵构建",
+      "description": "Step2_BuildMPCmatrices.m 构建状态预测矩阵Phi和Gamma，性能输出预测矩阵Psi和Upsilon，QP代价矩阵H和F，约束矩阵P、M1、M2。",
+      "nodeIds": [
+        "file:src/Step2_BuildMPCmatrices.m"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "活跃集枚举",
+      "description": "Step3_RegionlessSolver.m 随机采样5000-8000个状态空间点，用quadprog求解每个QP，识别最优活跃集，计算KKT矩阵分解S、Q_Ai、q_Ai，打包为codegen安全的填充数组。",
+      "nodeIds": [
+        "file:src/Step3_RegionlessSolver.m",
+        "concept:active-set",
+        "concept:kkt-conditions"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "在线评估算法",
+      "description": "regionless_mpc_eval.m 实现Algorithm 5：计算无约束解，检查空活跃集可行性，对每个预枚举活跃集计算对偶变量，检查对偶和原始可行性，返回第一个可行解。",
+      "nodeIds": [
+        "function:src/regionless_mpc_eval.m:regionless_mpc_eval",
+        "concept:regionless-mpc"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "CarSim 2020 集成",
+      "description": "src_2020/ 目录包含四轮独立控制器，支持CarSim 2020联合仿真。每轮使用独立的前后轴参数，添加俯仰补偿，支持标定模式A/B测试。",
+      "nodeIds": [
+        "file:src_2020/config_2020.m",
+        "file:src_2020/per_corner_mpc_state_step_2020.m"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "权重调参",
+      "description": "rho5（控制力权重）必须很小（1e-7~1e-9），否则优化器会最小化控制力而非改善舒适性。经验法则：rho * expected_value^2 各项应在同一数量级。",
+      "nodeIds": [
+        "file:src_2020/empc_calibration_settings_2020.m",
+        "file:src_2020/road3_rho5_offline/TrainRoad3Rho5Offline_2020.m"
+      ]
+    }
+  ]
+}

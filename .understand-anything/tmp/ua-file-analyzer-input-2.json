@@ -1,0 +1,402 @@
+{
+  "projectRoot": "E:/Scientific_Research/claude",
+  "batchFiles": [
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/compatibility/utils/mpt_getFullRankSubset.m",
+      "language": "matlab",
+      "sizeLines": 160,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/geometry/unions/@PolyUnion/isOverlapping.m",
+      "language": "matlab",
+      "sizeLines": 62,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_PWApenalty.m",
+      "language": "matlab",
+      "sizeLines": 152,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_previous.m",
+      "language": "matlab",
+      "sizeLines": 84,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_reference.m",
+      "language": "matlab",
+      "sizeLines": 140,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/abs.m",
+      "language": "matlab",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/atan2.m",
+      "language": "matlab",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/blkdiag.m",
+      "language": "matlab",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/brutepersp.m",
+      "language": "matlab",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/ceil.m",
+      "language": "matlab",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clear_poly_dep.m",
+      "language": "matlab",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearconic.m",
+      "language": "matlab",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearconicinfo.m",
+      "language": "matlab",
+      "sizeLines": 4,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearcreationtime.m",
+      "language": "matlab",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearsdpvar.m",
+      "language": "matlab",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/colamd.m",
+      "language": "matlab",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/deepdepends.m",
+      "language": "matlab",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/degreduce.m",
+      "language": "matlab",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/degree.m",
+      "language": "matlab",
+      "sizeLines": 109,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/depends.m",
+      "language": "matlab",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/display.m",
+      "language": "matlab",
+      "sizeLines": 219,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/eig.m",
+      "language": "matlab",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/eliminateBinary.m",
+      "language": "matlab",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/end.m",
+      "language": "matlab",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/expanded.m",
+      "language": "matlab",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/exponents.m",
+      "language": "matlab",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/find.m",
+      "language": "matlab",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/fix.m",
+      "language": "matlab",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/floor.m",
+      "language": "matlab",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getbase.m",
+      "language": "matlab",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getbasematrixwithoutcheck.m",
+      "language": "matlab",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getsosrank.m",
+      "language": "matlab",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getvariables.m",
+      "language": "matlab",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/hankel.m",
+      "language": "matlab",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/harmmean.m",
+      "language": "matlab",
+      "sizeLines": 57,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/compatibility/utils/mpt_getFullRankSubset.m": [
+      "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/compatibility/utils/mpt_getFullRankSubset.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/nchoosek.m"
+    ],
+    "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/geometry/unions/@PolyUnion/isOverlapping.m": [
+      "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/geometry/unions/@PolyUnion/isOverlapping.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/nchoosek.m"
+    ],
+    "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_PWApenalty.m": [
+      "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_PWApenalty.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/sdpvar.m"
+    ],
+    "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_previous.m": [
+      "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_previous.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/sdpvar.m"
+    ],
+    "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_reference.m": [
+      "tbxmanager/toolboxes/mpt/3.2.1/all/mpt3-3_2_1/mpt/modules/ui/@SystemSignal/filter_reference.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/sdpvar.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/abs.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/isreal.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/derivebounds.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/extsubsref.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getbase.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getvariables.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/atan2.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/blkdiag.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/blkdiag.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/cumsum.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/sparse.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/is.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/sdpvar.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getvariables.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/brutepersp.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/brutepersp.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/ceil.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/prod.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/derivebounds.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/extsubsref.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/integer.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clear_poly_dep.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@lmi/clear_poly_dep.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getvariables.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearconic.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearconic.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearconicinfo.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearconicinfo.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearcreationtime.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearcreationtime.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearsdpvar.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/clearsdpvar.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/sdpvar.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/colamd.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/colamd.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/sdpvar.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/deepdepends.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/deepdepends.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/depends.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/degreduce.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/degreduce.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/sdpvar.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/clean.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getbase.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getvariables.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/islinear.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/degree.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/exponents.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/sdpvar.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@optproblem/subsref.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/degree.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/depends.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/recover.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/depends.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/depends.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/display.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/ishermitian.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/issymmetric.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@constraint/nnz.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/double.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/imag.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/is.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/isreal.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/real.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@probability/display.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/depends.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getbase.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getbasematrix.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getvariables.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/islinear.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/recover.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/value.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/eig.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/CreateBasicOperator.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getvariables.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/eliminateBinary.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@lmi/eliminateBinary.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/recover.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/recovermonoms.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/end.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/prod.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/expanded.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/expanded.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/exponents.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/exponents.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/extsubsref.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getvariables.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/find.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@optproblem/subsref.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/operators/find_internal.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/fix.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/prod.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/binvar.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/derivebounds.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/extsubsref.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/integer.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/floor.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/prod.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/derivebounds.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/extsubsref.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/integer.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getbase.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getbase.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getbasematrixwithoutcheck.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getbasematrixwithoutcheck.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getsosrank.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getsosrank.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/getvariables.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/getvariables.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/hankel.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/hankel.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/prod.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/extsubsref.m"
+    ],
+    "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/harmmean.m": [
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/cone.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/@sdpvar/harmmean.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/is.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/@ndsdpvar/sdpvar.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/extsubsref.m",
+      "tbxmanager/toolboxes/yalmip/R20230609/all/YALMIP-master/extras/yalmip.m"
+    ]
+  }
+}

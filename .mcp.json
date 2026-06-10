@@ -2,15 +2,35 @@
   "mcpServers": {
     "git": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-git", "--repository", "E:/科研/claude"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-git",
+        "--repository",
+        "E:/\u7ec9\u6220\u723a/claude"
+      ]
     },
     "github": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ]
     },
     "latest-science": {
       "command": "npx",
-      "args": ["-y", "@futurelab-studio/latest-science-mcp"]
+      "args": [
+        "-y",
+        "@futurelab-studio/latest-science-mcp"
+      ]
+    },
+    "academic-search": {
+      "command": "python",
+      "args": [
+        "C:/Users/THY/.agents/skills/nature-skills/skills/nature-academic-search/mcp-server/academic_search_server.py"
+      ],
+      "env": {
+        "PUBMED_EMAIL": "1484702697@qq.com"
+      }
     }
   }
 }

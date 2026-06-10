@@ -1,0 +1,199 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 24,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/per_corner_mpc.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 173,
+      "nonEmptyLines": 148,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/AnalyzeFlatPose_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 604,
+      "nonEmptyLines": 550,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/AnalyzeRoad3BumpExperiment_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 568,
+      "nonEmptyLines": 517,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/Step1_BuildPredictionModel_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 93,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/Step3_RegionlessSolver_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 221,
+      "nonEmptyLines": 197,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/config_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 80,
+      "nonEmptyLines": 69,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/empc_calibration_settings_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 74,
+      "nonEmptyLines": 68,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/generate_road3_bump_csvs_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 70,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/per_corner_mpc_L1_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 28,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/per_corner_mpc_L2_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 28,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/per_corner_mpc_R1_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 28,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/per_corner_mpc_R2_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 28,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/per_corner_mpc_state_step_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 126,
+      "nonEmptyLines": 106,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/rear_diff_limiter_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 17,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/regionless_mpc_eval_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 40,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/road3_rho5_offline/ActivateRoad3Rho5Profile_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 61,
+      "nonEmptyLines": 52,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/road3_rho5_offline/RestoreRoad3Rho5Backup_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 23,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/road3_rho5_offline/Road3Rho5AssetNames_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 13,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/road3_rho5_offline/Road3Rho5Config_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 49,
+      "nonEmptyLines": 41,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/road3_rho5_offline/Road3Rho5Profiles_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 27,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/road3_rho5_offline/TrainRoad3Rho5Offline_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 521,
+      "nonEmptyLines": 464,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/road3_rho5_offline/test_road3_rho5_offline_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 66,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/self_check_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 75,
+      "nonEmptyLines": 66,
+      "metrics": {}
+    },
+    {
+      "path": "src_2020/test_calibration_tools_2020.m",
+      "language": "matlab",
+      "fileCategory": "code",
+      "totalLines": 89,
+      "nonEmptyLines": 80,
+      "metrics": {}
+    }
+  ]
+}

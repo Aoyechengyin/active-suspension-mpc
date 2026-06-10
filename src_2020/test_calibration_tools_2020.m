@@ -80,6 +80,54 @@ assert(rear_enabled && rear_limit == 1000 && rear_scale == -1, 'B2 reverse rear 
 assert(front_enabled && front_limit == 3000, 'B3 front should be limited to 3000 N.');
 assert(rear_enabled && rear_limit == 2000, 'B3 rear should be limited to 2000 N.');
 
+[front_enabled, front_limit, front_scale, front_post] = empc_calibration_settings_2020('L1', 'ROAD3_BUMP_SAFE');
+[rear_enabled, rear_limit, rear_scale, rear_post] = empc_calibration_settings_2020('L2', 'ROAD3_BUMP_SAFE');
+assert(front_enabled && front_limit == 1000 && front_scale == 1, 'Road-3 bump-safe front should be limited to 1000 N.');
+assert(rear_enabled && rear_limit == 650 && rear_scale == 1, 'Road-3 bump-safe rear should be limited to 650 N.');
+assert(front_post.enabled && front_post.limit_N == 1000, 'Road-3 front post-processing must be enabled at 1000 N.');
+assert(rear_post.enabled && rear_post.limit_N == 650, 'Road-3 rear post-processing must be enabled at 650 N.');
+
+[front_enabled, front_limit, ~, front_only_post] = empc_calibration_settings_2020('L1', 'ROAD3_T2_FRONT_ONLY_TIGHT');
+[rear_enabled, rear_limit, ~, rear_disabled_post] = empc_calibration_settings_2020('L2', 'ROAD3_T2_FRONT_ONLY_TIGHT');
+assert(front_enabled && front_limit == 1000 && front_only_post.enabled, 'T2 front-only tight should keep the front controller at 1000 N.');
+assert(~rear_enabled && rear_limit == 0 && ~rear_disabled_post.enabled, 'T2 front-only tight should disable the rear controller.');
+
+[front_enabled, front_limit, ~, front_disabled_post] = empc_calibration_settings_2020('R1', 'ROAD3_T2_REAR_ONLY_TIGHT');
+[rear_enabled, rear_limit, ~, rear_only_post] = empc_calibration_settings_2020('R2', 'ROAD3_T2_REAR_ONLY_TIGHT');
+assert(~front_enabled && front_limit == 0 && ~front_disabled_post.enabled, 'T2 rear-only tight should disable the front controller.');
+assert(rear_enabled && rear_limit == 650 && rear_only_post.enabled, 'T2 rear-only tight should keep the rear controller at 650 N.');
+
+[front_enabled, front_limit, ~, both_front_post] = empc_calibration_settings_2020('L1', 'ROAD3_T2_BOTH_TIGHT');
+[rear_enabled, rear_limit, ~, both_rear_post] = empc_calibration_settings_2020('L2', 'ROAD3_T2_BOTH_TIGHT');
+assert(front_enabled && front_limit == 1000 && both_front_post.rate_limit_N_per_s == 15000, 'T2 both-tight front settings changed unexpectedly.');
+assert(rear_enabled && rear_limit == 650 && both_rear_post.rate_limit_N_per_s == 9000, 'T2 both-tight rear settings changed unexpectedly.');
+
+[~, ~, ~, gate_pos] = empc_calibration_settings_2020('L1', 'ROAD3_T2_COMFORT_GATE_UV_POS');
+[~, ~, ~, gate_neg] = empc_calibration_settings_2020('L1', 'ROAD3_T2_COMFORT_GATE_UV_NEG');
+[~, ~, ~, paper_best] = empc_calibration_settings_2020('L1', 'ROAD3_PAPER_ACTIVE_BEST');
+[~, ~, ~, default_post] = empc_calibration_settings_2020('L1');
+assert(gate_pos.energy_gate_mode == 1, 'UV_POS gate mode should carry positive sign metadata.');
+assert(gate_neg.energy_gate_mode == -1, 'UV_NEG gate mode should carry negative sign metadata.');
+assert(paper_best.energy_gate_mode == 1, 'Paper active best should use the UV_POS gate direction.');
+assert(default_post.energy_gate_mode == 1, 'Default calibration mode should be the frozen paper active best UV_POS mode.');
+
+[u1, state] = road3_bump_safe_output_2020(3000, 0, front_post, 0.001);
+[u2, state] = road3_bump_safe_output_2020(3000, state, front_post, 0.001);
+assert(abs(u1) <= 15 + 1e-9, 'Road-3 front output should obey the first 1 ms rate limit.');
+assert(abs(u2 - u1) <= 15 + 1e-9, 'Road-3 front output should obey repeated rate limits.');
+[u_rear, ~] = road3_bump_safe_output_2020(3000, 0, rear_post, 0.001);
+assert(abs(u_rear) <= 9 + 1e-9, 'Road-3 rear output should obey the first 1 ms rate limit.');
+[u_clip, ~] = road3_bump_safe_output_2020(3000, 995, front_post, 1.0);
+assert(abs(u_clip) <= 1000 + 1e-9, 'Road-3 front output should obey the hard soft-mode limit.');
+[u_allowed, ~] = road3_bump_safe_output_2020(3000, 0, gate_pos, 0.001, 1.0);
+[u_blocked, ~] = road3_bump_safe_output_2020(3000, 0, gate_pos, 0.001, -1.0);
+assert(abs(u_allowed) > 0, 'UV_POS should allow commands with matching force/velocity sign.');
+assert(abs(u_blocked) < 1e-12, 'UV_POS should gate commands with opposite force/velocity sign.');
+[u_allowed_neg, ~] = road3_bump_safe_output_2020(3000, 0, gate_neg, 0.001, -1.0);
+[u_blocked_neg, ~] = road3_bump_safe_output_2020(3000, 0, gate_neg, 0.001, 1.0);
+assert(abs(u_allowed_neg) > 0, 'UV_NEG should allow commands with negative force/velocity product.');
+assert(abs(u_blocked_neg) < 1e-12, 'UV_NEG should gate commands with positive force/velocity product.');
+
 [u_l2, u_r2] = rear_diff_limiter_2020(3000, -3000, 500);
 assert(abs(u_l2 - 500) < 1e-9 && abs(u_r2 + 500) < 1e-9, 'Rear differential limiter should clip symmetric opposite commands.');
 [u_l2, u_r2] = rear_diff_limiter_2020(3000, 1000, 500);
