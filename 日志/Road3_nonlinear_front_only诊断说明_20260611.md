@@ -7,12 +7,12 @@ T2 50 mm pilot 的 nonlinear preview 已经消除了止块力，但相对 Passiv
 当前诊断先验证“后轴主动输出是否是主要恶化源”，随后验证“前轴输出是否过强或相位不合适”。当前默认控制模式切到：
 
 ```matlab
-ROAD3_NONLINEAR_FRONT500_GATE_UV_POS
+ROAD3_NONLINEAR_FRONT400_GATE_UV_POS
 ```
 
 该模式含义：
 
-- 前轴：启用 nonlinear region-scheduled eMPC，限幅 `500 N`，rate limit `15000 N/s`，启用正向 `u*v` 门控。
+- 前轴：启用 nonlinear region-scheduled eMPC，限幅 `400 N`，rate limit `15000 N/s`，启用正向 `u*v` 门控。
 - 后轴：主动力输出 `0 N`。
 - 仍使用 `src_nonlinear` 中已激活的 `ROAD3_NONLINEAR_QC_LONGTRAVEL_V1` 控制律资产。
 
@@ -25,11 +25,12 @@ ROAD3_NONLINEAR_FRONT500_GATE_UV_POS
 - `ROAD3_NONLINEAR_FRONT500_ONLY`：前轴 `500 N`，后轴 `0 N`。
 - `ROAD3_NONLINEAR_FRONT500_GATE_UV_POS`：前轴 `500 N`，后轴 `0 N`，正向 `u*v` 门控。
 - `ROAD3_NONLINEAR_FRONT500_GATE_UV_NEG`：前轴 `500 N`，后轴 `0 N`，负向 `u*v` 门控。
+- `ROAD3_NONLINEAR_FRONT450_GATE_UV_POS`：前轴 `450 N`，后轴 `0 N`，正向 `u*v` 门控。
 
 当前默认模式已设为：
 
 ```matlab
-default_mode = 'ROAD3_NONLINEAR_FRONT500_GATE_UV_POS';
+default_mode = 'ROAD3_NONLINEAR_FRONT400_GATE_UV_POS';
 ```
 
 ## 仿真前检查
@@ -83,7 +84,7 @@ Carsim参数集/3D路况文件/Road3_T2_long_150mm_210m_0p05m.csv
 
 1. 先在 `Road3_T2_long_50mm_pilot_210m_0p05m.csv` 上跑 `ROAD3_NONLINEAR_FRONT500_ONLY` preview。
 2. 若 `Az event/0-4/0-15 RMS` 相对 `ROAD3_NONLINEAR_FRONT_ONLY_TIGHT` 明显下降，但仍输给 Passive，再分别测试 `ROAD3_NONLINEAR_FRONT500_GATE_UV_POS` 和 `ROAD3_NONLINEAR_FRONT500_GATE_UV_NEG`。
-3. 只有 500 N 或 500 N gate 明显改善垂向指标后，才考虑加回少量后轴控制，例如 `ROAD3_NONLINEAR_BOTH_REAR400_TIGHT`。
+3. 当前保守候选为 `ROAD3_NONLINEAR_FRONT400_GATE_UV_POS`。`450 N` 可作为更主动的备选，但不作为默认。
 4. 只有 T2 50 mm pilot 稳定且不劣于 Passive 后，再进入 T2 150 mm full。
 
 ## 已知诊断结论
@@ -105,3 +106,33 @@ Carsim参数集/3D路况文件/Road3_T2_long_150mm_210m_0p05m.csv
 - 前悬回弹行程仍比 Passive 更深。
 
 因此下一步默认切到 `ROAD3_NONLINEAR_FRONT500_GATE_UV_POS`，先判断正向门控能否消除错误相位/能量注入。
+
+`ROAD3_NONLINEAR_FRONT500_GATE_UV_POS` 已显示明显有效，但仍未完全超过 Passive：
+
+- `Az event RMS` 相对 Passive 增加约 `2.04%`，相对无门控 `Front500` 降低约 `7.59%`。
+- `Az 0-4 RMS` 相对 Passive 增加约 `2.19%`，相对无门控降低约 `18.27%`。
+- `Zcg` heave peak 相对 Passive 增加约 `2.30%`，相对无门控降低约 `12.31%`。
+- `Pitch peak` 相对 Passive 改善约 `2.16%`。
+- 前悬回弹基本回到 Passive 附近。
+
+因此下一步默认切到 `ROAD3_NONLINEAR_FRONT500_GATE_UV_NEG`，用于确认门控符号。如果 UV_NEG 变差，应保留 UV_POS 作为当前最佳 nonlinear 输出策略。
+
+`ROAD3_NONLINEAR_FRONT500_GATE_UV_NEG` 已验证明显差于 UV_POS，因此不继续使用。
+
+`ROAD3_NONLINEAR_FRONT400_GATE_UV_POS` 是当前最稳的 conservative candidate：
+
+- `Az event RMS` 相对 Passive 增加约 `1.43%`，相对 `500 N UV_POS` 降低约 `0.59%`。
+- `Az 0-15 RMS` 相对 Passive 增加约 `1.42%`，相对 `500 N UV_POS` 降低约 `0.60%`。
+- `Pitch peak` 相对 Passive 改善约 `1.80%`。
+- 前/后悬回弹行程基本贴近 Passive。
+- 后轴主动力保持 `0 N`。
+
+后续如果追求更积极的主动效果，可尝试 `450 N UV_POS`；如果追求稳健复现和避免恶化，优先使用 `400 N UV_POS`。
+
+`ROAD3_NONLINEAR_FRONT450_GATE_UV_POS` 已完成验证：
+
+- `Az event RMS` 相对 Passive 增加约 `1.69%`，略差于 400 N 的 `1.43%`。
+- `Az 0-15 RMS` 相对 Passive 增加约 `1.68%`，略差于 400 N 的 `1.42%`。
+- `Pitch peak` 相对 Passive 改善约 `1.96%`，略优于 400 N 的 `1.80%`。
+
+450 N 的优势不足以替代 400 N 作为保守默认；若汇报时强调主动 pitch 收益，可把 450 N 作为备选结果展示。

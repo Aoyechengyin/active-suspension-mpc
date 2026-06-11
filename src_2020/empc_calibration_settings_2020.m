@@ -20,10 +20,13 @@ function [enabled, u_limit, output_scale, post_settings] = empc_calibration_sett
 %   ROAD3_NONLINEAR_FRONT500_ONLY - Nonlinear diagnostic, front only at 500 N.
 %   ROAD3_NONLINEAR_FRONT500_GATE_UV_POS - Front 500 N with positive u*v gate.
 %   ROAD3_NONLINEAR_FRONT500_GATE_UV_NEG - Front 500 N with negative u*v gate.
+%   ROAD3_NONLINEAR_FRONT450_GATE_UV_POS - Front 450 N with positive u*v gate.
+%   ROAD3_NONLINEAR_FRONT400_GATE_UV_POS - Front 400 N with positive u*v gate.
+%   ROAD3_NONLINEAR_FRONT400_GATE_UV_POS_ROAD_ARM - Front 400 N, UV_POS, road-preview arming.
 %   PASSIVE_ZERO    - Four corners disabled, zero external force.
 
 if nargin < 2
-    default_mode = 'ROAD3_NONLINEAR_FRONT500_GATE_UV_POS';
+    default_mode = 'ROAD3_NONLINEAR_FRONT400_GATE_UV_POS_ROAD_ARM';
     mode = default_mode;                                                                      
 end
 
@@ -98,6 +101,21 @@ switch mode
         rear_limit = 0;
         front_enabled = true;
         rear_enabled = false;
+    case 'ROAD3_NONLINEAR_FRONT400_GATE_UV_POS'
+        front_limit = 400;
+        rear_limit = 0;
+        front_enabled = true;
+        rear_enabled = false;
+    case 'ROAD3_NONLINEAR_FRONT450_GATE_UV_POS'
+        front_limit = 450;
+        rear_limit = 0;
+        front_enabled = true;
+        rear_enabled = false;
+    case 'ROAD3_NONLINEAR_FRONT400_GATE_UV_POS_ROAD_ARM'
+        front_limit = 400;
+        rear_limit = 0;
+        front_enabled = true;
+        rear_enabled = false;
     case {'ROAD3_T2_BOTH_TIGHT', 'ROAD3_T2_COMFORT_GATE_UV_POS', 'ROAD3_T2_COMFORT_GATE_UV_NEG', 'ROAD3_PAPER_ACTIVE_BEST'}
         front_limit = 1000;
         rear_limit = 650;
@@ -152,16 +170,26 @@ tf = strcmp(mode, 'ROAD3_BUMP_SAFE') || ...
     strcmp(mode, 'ROAD3_NONLINEAR_BOTH_REAR400_TIGHT') || ...
     strcmp(mode, 'ROAD3_NONLINEAR_FRONT500_ONLY') || ...
     strcmp(mode, 'ROAD3_NONLINEAR_FRONT500_GATE_UV_POS') || ...
-    strcmp(mode, 'ROAD3_NONLINEAR_FRONT500_GATE_UV_NEG');
+    strcmp(mode, 'ROAD3_NONLINEAR_FRONT500_GATE_UV_NEG') || ...
+    strcmp(mode, 'ROAD3_NONLINEAR_FRONT450_GATE_UV_POS') || ...
+    strcmp(mode, 'ROAD3_NONLINEAR_FRONT400_GATE_UV_POS') || ...
+    strcmp(mode, 'ROAD3_NONLINEAR_FRONT400_GATE_UV_POS_ROAD_ARM');
 end
 
 function gate = local_energy_gate_mode(mode)
 if strcmp(mode, 'ROAD3_T2_COMFORT_GATE_UV_POS') || strcmp(mode, 'ROAD3_PAPER_ACTIVE_BEST') || ...
-        strcmp(mode, 'ROAD3_NONLINEAR_FRONT500_GATE_UV_POS')
+        strcmp(mode, 'ROAD3_NONLINEAR_FRONT500_GATE_UV_POS') || ...
+        strcmp(mode, 'ROAD3_NONLINEAR_FRONT450_GATE_UV_POS') || ...
+        strcmp(mode, 'ROAD3_NONLINEAR_FRONT400_GATE_UV_POS') || ...
+        strcmp(mode, 'ROAD3_NONLINEAR_FRONT400_GATE_UV_POS_ROAD_ARM')
     gate = 1;
 elseif strcmp(mode, 'ROAD3_T2_COMFORT_GATE_UV_NEG') || strcmp(mode, 'ROAD3_NONLINEAR_FRONT500_GATE_UV_NEG')
     gate = -1;
 else
     gate = 0;
 end
+end
+
+function tf = local_road_gate_enabled(mode)
+tf = strcmp(mode, 'ROAD3_NONLINEAR_FRONT400_GATE_UV_POS_ROAD_ARM');
 end
