@@ -106,10 +106,23 @@ assert(rear_enabled && rear_limit == 650 && both_rear_post.rate_limit_N_per_s ==
 [~, ~, ~, gate_neg] = empc_calibration_settings_2020('L1', 'ROAD3_T2_COMFORT_GATE_UV_NEG');
 [~, ~, ~, paper_best] = empc_calibration_settings_2020('L1', 'ROAD3_PAPER_ACTIVE_BEST');
 [~, ~, ~, default_post] = empc_calibration_settings_2020('L1');
+[front_act50_enabled, front_act50_limit, ~, act50_only] = empc_calibration_settings_2020('L1', 'ROAD3_NONLINEAR_FRONT500_ACT50_ONLY');
+[rear_act50_enabled, rear_act50_limit, ~, rear_act50] = empc_calibration_settings_2020('L2', 'ROAD3_NONLINEAR_FRONT500_ACT50_ONLY');
+[~, ~, ~, act50_pos] = empc_calibration_settings_2020('L1', 'ROAD3_NONLINEAR_FRONT500_ACT50_UV_POS');
+[~, ~, ~, act50_neg] = empc_calibration_settings_2020('L1', 'ROAD3_NONLINEAR_FRONT500_ACT50_UV_NEG');
 assert(gate_pos.energy_gate_mode == 1, 'UV_POS gate mode should carry positive sign metadata.');
 assert(gate_neg.energy_gate_mode == -1, 'UV_NEG gate mode should carry negative sign metadata.');
 assert(paper_best.energy_gate_mode == 1, 'Paper active best should use the UV_POS gate direction.');
-assert(default_post.energy_gate_mode == 1, 'Default calibration mode should be the frozen paper active best UV_POS mode.');
+assert(default_post.enabled && default_post.limit_N == 500 && default_post.energy_gate_mode == 0, ...
+    'Default calibration mode should be strict ACT50 front500 only.');
+assert(default_post.smooth_tau_s == 0, 'Default ACT50 mode must disable software smoothing.');
+assert(front_act50_enabled && front_act50_limit == 500 && act50_only.enabled, 'ACT50 front-only mode should enable front 500 N output.');
+assert(~rear_act50_enabled && rear_act50_limit == 0 && ~rear_act50.enabled, 'ACT50 front-only mode should disable rear output.');
+assert(act50_only.rate_limit_N_per_s == 15000, 'ACT50 front-only mode should keep the 15000 N/s safety rate limit.');
+assert(act50_only.smooth_tau_s == 0, 'ACT50 mode must disable software smoothing to avoid duplicate actuator lag.');
+assert(act50_only.energy_gate_mode == 0, 'ACT50_ONLY should not apply energy gating.');
+assert(act50_pos.energy_gate_mode == 1, 'ACT50_UV_POS should carry positive gate metadata.');
+assert(act50_neg.energy_gate_mode == -1, 'ACT50_UV_NEG should carry negative gate metadata.');
 
 [u1, state] = road3_bump_safe_output_2020(3000, 0, front_post, 0.001);
 [u2, state] = road3_bump_safe_output_2020(3000, state, front_post, 0.001);
@@ -127,6 +140,21 @@ assert(abs(u_blocked) < 1e-12, 'UV_POS should gate commands with opposite force/
 [u_blocked_neg, ~] = road3_bump_safe_output_2020(3000, 0, gate_neg, 0.001, 1.0);
 assert(abs(u_allowed_neg) > 0, 'UV_NEG should allow commands with negative force/velocity product.');
 assert(abs(u_blocked_neg) < 1e-12, 'UV_NEG should gate commands with positive force/velocity product.');
+
+u_act = 0;
+for i = 1:10
+    [u_act, alpha] = road3_actuator50_step_2020(1, u_act, 0.001, 0.05);
+end
+assert(abs(alpha - exp(-0.001 / 0.05)) < 1e-14, 'ACT50 alpha changed unexpectedly.');
+assert(abs(u_act - (1 - exp(-0.010 / 0.05))) < 1e-12, 'ACT50 10 ms step response should be about 18 percent.');
+for i = 11:20
+    [u_act] = road3_actuator50_step_2020(1, u_act, 0.001, 0.05);
+end
+assert(abs(u_act - (1 - exp(-0.020 / 0.05))) < 1e-12, 'ACT50 20 ms step response should be about 33 percent.');
+for i = 21:50
+    [u_act] = road3_actuator50_step_2020(1, u_act, 0.001, 0.05);
+end
+assert(abs(u_act - (1 - exp(-0.050 / 0.05))) < 1e-12, 'ACT50 50 ms step response should be about 63 percent.');
 
 [u_l2, u_r2] = rear_diff_limiter_2020(3000, -3000, 500);
 assert(abs(u_l2 - 500) < 1e-9 && abs(u_r2 + 500) < 1e-9, 'Rear differential limiter should clip symmetric opposite commands.');
