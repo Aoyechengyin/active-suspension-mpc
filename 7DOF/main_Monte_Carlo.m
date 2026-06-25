@@ -1,6 +1,12 @@
 clear; clc;
 
-Nmc = 1000;
+thisDir = fileparts(mfilename('fullpath'));
+addpath(thisDir);
+addpath(fullfile(thisDir, 'road'));
+addpath(fullfile(thisDir, 'post'));
+addpath(fullfile(thisDir, 'model'));
+
+Nmc = 10;     % 先跑 10 组，不要一开始 1000
 Ts = 0.01;
 Tsim = 5.0;
 Lb = 1.0;
@@ -35,29 +41,25 @@ for i = 1:Nmc
 
     % 4. 稳定性验收：前轴撞击减速带 3 s 后
     t_front_hit = 0.0;
-    t_check = t_front_hit + 3.0;
-
+    
     defl = simOut.suspDefl;   % N x 4, [FL FR RL RR]
     time = simOut.time;
-
-    [~, idx] = min(abs(time - t_check));
-
-    defl_check = defl(idx, :);
-
-    %时间窗判据
-    idx_window = time >= t_check & time <= t_check + 1.0;
-    stable_window = max(abs(defl(idx_window,:)), [], 'all') <= 0.005;
-
-    % 论文式判据：3 s 后四角悬架动挠度不超过 5 mm
-    stable(i) = stable_point && stable_window && all(isfinite(defl(:)));
-
+    
+    opts = struct();
+    opts.settleTime = 3.0;
+    opts.windowLength = 1.0;
+    opts.deflTol = 0.005;
+    
+    [stable(i), metrics] = checkStability(time, defl, t_front_hit, opts);
+    
     % 5. 保存结果
     result(i).case = case_i;
-    result(i).defl_check = defl_check;
+    result(i).defl_check = metrics.defl_check;
+    result(i).metrics = metrics;
     result(i).stable = stable(i);
-
-    fprintf('Case %4d / %4d | stable = %d | max defl = %.3f mm\n', ...
-        i, Nmc, stable(i), max(abs(defl_check))*1000);
+    
+    fprintf('Case %4d / %4d | stable = %d | max window defl = %.3f mm | reason = %s\n', ...
+        i, Nmc, stable(i), metrics.max_abs_defl_window*1000, metrics.reason);
 end
 
 pass_rate = mean(stable) * 100;
