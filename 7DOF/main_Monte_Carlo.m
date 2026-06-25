@@ -6,7 +6,7 @@ addpath(fullfile(thisDir, 'road'));
 addpath(fullfile(thisDir, 'post'));
 addpath(fullfile(thisDir, 'model'));
 
-Nmc = 10;     % 先跑 10 组，不要一开始 1000
+Nmc = 100;     % 先跑 10 组，不要一开始 1000
 Ts = 0.01;
 Tsim = 5.0;
 Lb = 1.0;
@@ -67,3 +67,4 @@ pass_rate = mean(stable) * 100;
 fprintf('\nMonte Carlo finished.\n');
 fprintf('Pass rate = %.2f %%\n', pass_rate);
 fprintf('Failed cases = %d / %d\n', sum(~stable), Nmc);
+save('MC_7DOF_result_100.mat', 'result', 'stable', 'pass_rate');
