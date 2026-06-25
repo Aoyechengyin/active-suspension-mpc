@@ -34,7 +34,8 @@ for i = 1:Nmc
     simOut = runOneCase(param);
 
     % 4. 稳定性验收：前轴撞击减速带 3 s 后
-    t_check = 3.0;
+    t_front_hit = 0.0;
+    t_check = t_front_hit + 3.0;
 
     defl = simOut.suspDefl;   % N x 4, [FL FR RL RR]
     time = simOut.time;
@@ -43,9 +44,12 @@ for i = 1:Nmc
 
     defl_check = defl(idx, :);
 
+    %时间窗判据
+    idx_window = time >= t_check & time <= t_check + 1.0;
+    stable_window = max(abs(defl(idx_window,:)), [], 'all') <= 0.005;
+
     % 论文式判据：3 s 后四角悬架动挠度不超过 5 mm
-    stable(i) = all(abs(defl_check) <= 0.005) ...
-                && all(isfinite(defl_check));
+    stable(i) = stable_point && stable_window && all(isfinite(defl(:)));
 
     % 5. 保存结果
     result(i).case = case_i;
