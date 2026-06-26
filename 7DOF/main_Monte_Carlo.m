@@ -67,4 +67,4 @@ pass_rate = mean(stable) * 100;
 fprintf('\nMonte Carlo finished.\n');
 fprintf('Pass rate = %.2f %%\n', pass_rate);
 fprintf('Failed cases = %d / %d\n', sum(~stable), Nmc);
-save('MC_7DOF_result_100_boostfront.mat', 'result', 'stable', 'pass_rate');
+% save('MC_7DOF_result_100_boostfront.mat', 'result', 'stable', 'pass_rate');
